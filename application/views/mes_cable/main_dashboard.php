@@ -17,15 +17,15 @@
 				</div>
 				<div class="card-body">
 					<div class="tab-content">
-						<div class="tab-pane" id="today">
+						<div class="active tab-pane" id="today">
 							<div class="row justify-content-center">
 								<div class="col-lg-3 mx-3">
 									<div class="small-box bg-info">
 										<div class="inner">
 											<h3>Cable KM</h3>
-											<p>Plan : </p>
-											<p>Actual : </p>
-											<p>Percentage : </p>
+											<h5>Plan : </h5>
+											<h5>Actual : </h5>
+											<h5>Percentage : </h5>
 										</div>
 									</div>
 								</div>
@@ -33,20 +33,24 @@
 									<div class="small-box bg-success">
 										<div class="inner">
 											<h3>Fiber KM</h3>
-											<p>Plan : </p>
-											<p>Actual : </p>
-											<p>Percentage : </p>
+											<h5>Plan : </h5>
+											<h5>Actual : </h5>
+											<h5>Percentage : </h5>
 										</div>
 									</div>
 								</div>
 							</div>
 							<!-- Column Graph -->
 							 <div class="row justify-content-center">
-								<div class="col-lg-4 mx-3">
-									graph1
+								<div class="col-md-5 mx-1">
+									<div id="chart1">
+
+									</div>
 								</div>
-								<div class="col-lg-4 mx-3">
-									graph2
+								<div class="col-md-5 mx-1">
+									<div id="chart2">
+
+									</div>
 								</div>
 							 </div>
 						</div>
@@ -66,3 +70,28 @@
 	
   
 </div>
+<script>
+    var options = {
+  chart: {
+    type: 'bar'
+  },
+  series: [{
+    name: 'qty',
+    data: [100,60]
+  }],
+  xaxis: {
+    categories: ['Plan','Actual']
+  },
+	plotOptions: {
+		bar: {
+			distributed: true
+		}
+	}
+}
+
+var chart2 = new ApexCharts(document.querySelector("#chart2"), options);
+var chart1 = new ApexCharts(document.querySelector("#chart1"), options);
+
+chart1.render();
+chart2.render();
+</script>

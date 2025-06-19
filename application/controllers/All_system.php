@@ -29,4 +29,8 @@ class All_system extends CI_Controller {
         $data['content'] = 'about';
         $this->load->view('template/main', $data);
     }
+
+    public function back_allsystem(){
+        $this->index();
+    }
 }

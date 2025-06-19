@@ -52,6 +52,12 @@
             <p>Sign Out</p>
           </a>
         </li>
+        <li class="nav-item">
+          <a href="<?= base_url('all_system/back_allsystem') ?>" class="nav-link">
+            <i class="nav-icon fas fa-left-long"></i>
+            <p>Back to All System</p>
+          </a>
+        </li>
       </ul>
     </nav>
   </div>
