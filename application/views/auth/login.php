@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Login - Dashboard IT</title>
+  <title>Login - FUSION</title>
+  <link rel="icon" type="image/x-icon" href="<?= base_url('assets/img/fusion_icon.ico')?>">
   <link rel="stylesheet" href="<?= base_url('assets/plugins/fontawesome-free/css/all.min.css') ?>">
   <link rel="stylesheet" href="<?= base_url('assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css') ?>">
   <link rel="stylesheet" href="<?= base_url('assets/dist/css/adminlte.min.css') ?>">
@@ -12,11 +13,10 @@
 <div class="login-box">
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a href="#" class="h1"><b>Dashboard</b> IT</a>
+    <p class="login-box-msg"><img src="<?= base_url('assets/img/fusion_new.jpg')?>" style="width:200px;height:180px;"></p>
+      <a href="#" class="h5"><b>Factory Unified System Information</b></a>
     </div>
     <div class="card-body">
-      <p class="login-box-msg">Silakan login untuk melanjutkan</p>
-
       <?php if ($this->session->flashdata('error')): ?>
         <div class="alert alert-danger"><?= $this->session->flashdata('error') ?></div>
       <?php endif; ?>

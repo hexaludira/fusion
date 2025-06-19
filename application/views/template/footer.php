@@ -1,4 +1,4 @@
 <footer class="main-footer text-center">
-  <strong>&copy; <?= date('Y') ?> Dashboard IT</strong>
+  <strong>&copy; <?= date('Y') ?> FUSION</strong>
 </footer>
 

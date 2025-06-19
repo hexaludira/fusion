@@ -23,7 +23,7 @@ class Auth extends CI_Controller {
                 'name' => $user->name,
                 'role_id' => $user->role_id
             ]);
-            redirect('dashboard');
+            redirect('all_system');
         } else {
             $this->session->set_flashdata('error','Email atau password salah!');
             redirect('auth');

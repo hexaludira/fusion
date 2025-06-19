@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title><?= isset($title) ? $title : 'Dashboard'; ?></title>
+  <title><?= isset($title) ? $title : 'FUSION'; ?></title>
+  <link rel="icon" type="image/x-icon" href="<?= base_url('assets/img/fusion_icon.ico')?>">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="<?= base_url('assets/plugins/fontawesome-free/css/all.min.css') ?>">
   <link rel="stylesheet" href="<?= base_url('assets/dist/css/adminlte.min.css') ?>">
@@ -25,14 +26,14 @@
 <div class="wrapper">
 
   <?php $this->load->view('template/topbar'); ?>
-  <?php $this->load->view('template/sidebar', $menus); ?>
+  <?php //$this->load->view('template/sidebar', $menus); 
+    $this->load->view($sidebar);
+  ?>
 
   <!-- Content Wrapper -->
   <div class="content-wrapper">
     <section class="content pt-3 px-3">
-      <?php $this->load->view($content);
-        //$this->load->view('dashboard');
-      ?>
+      <?php $this->load->view($content);?>
     </section>
   </div>
 
