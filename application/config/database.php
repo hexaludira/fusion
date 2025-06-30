@@ -97,10 +97,10 @@ $db['default'] = array(
 
 $db['db_mes'] = array(
 	'dsn'	=> '',
-	'hostname' => '192.168.10.101',
-	'username' => 'root',
+	'hostname' => '192.168.10.8',
+	'username' => 'Admin',
 	'password' => 'cr35tafalleN',
-	'database' => 'test_db',
+	'database' => 'ht.mes.4.0',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

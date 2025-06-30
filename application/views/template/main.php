@@ -17,7 +17,17 @@
 
   <!-- Select2 Bootstrap 4 -->
   <link rel="stylesheet" href="<?= base_url('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.css')?>">
+
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="<?= base_url('assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')?>">
+
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="<?= base_url('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')?>">
+  <link rel="stylesheet" href="<?= base_url('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')?>">
+  <link rel="stylesheet" href="<?= base_url('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')?>">
+
   <link rel="stylesheet" href="<?= base_url('assets/dist/css/apexcharts.css') ?>">
+  <link rel="stylesheet" href="<?= base_url('assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')?>">
 
   <script src="<?= base_url('assets/plugins/jquery/jquery.min.js'); ?>"></script>
   <script src="<?= base_url('assets/dist/js/apexcharts.min.js') ?>"></script>
@@ -47,6 +57,22 @@
   <script src="<?= base_url('assets/plugins/moment/moment.min.js')?>"></script>
   <script src="<?= base_url('assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')?>"></script>
   <script src="<?= base_url('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
+  
+  <script src="<?= base_url('assets/plugins/datatables/jquery.dataTables.min.js')?>"></script>
+  <script src="<?= base_url('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')?>"></script>
+  <script src="<?= base_url('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.js')?>"></script>
+  <script src="<?= base_url('assets/plugins/datatables-responsive/js/dataTables.responsive.js')?>"></script>
+  <script src="<?= base_url('assets/plugins/datatables-responsive/js/dataTables.responsive.min.js')?>"></script>
+  <script src="<?= base_url('assets/plugins/datatables-responsive/js/responsive.bootstrap4.js')?>"></script>
+  <script src="<?= base_url('assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')?>"></script>
+  <script src="<?= base_url('assets/plugins/datatables-buttons/js/dataTables.buttons.min.js')?>"></script>
+  <script src="<?= base_url('assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')?>"></script>
+  <script src="<?= base_url('assets/plugins/jszip/jszip.min.js')?>"></script>
+  <script src="<?= base_url('assets/plugins/pdfmake/pdfmake.min.js')?>"></script>
+  <script src="<?= base_url('assets/plugins/pdfmake/vfs_fonts.js')?>"></script>
+  <script src="<?= base_url('assets/plugins/datatables-buttons/js/buttons.html5.min.js')?>"></script>
+  <script src="<?= base_url('assets/plugins/datatables-buttons/js/buttons.print.min.js')?>"></script>
+  <script src="<?= base_url('assets/plugins/datatables-buttons/js/buttons.colVis.min.js')?>"></script>
   
 
 </body>
