@@ -7,6 +7,7 @@ class MC_plan_input extends CI_Controller {
         parent::__construct();
         check_login();
         $this->load->model('Menu_model');
+        $this->load->model('mes_cable/Plan_daily_model','plan_model');
     }
 
     public function index() {
@@ -21,6 +22,66 @@ class MC_plan_input extends CI_Controller {
         // }
         
         $this->load->view('template/main', $data); 
+    }
+
+    public function getPlanData(){
+        $data = $this->plan_model->getPlanDataAll();
+        echo json_encode($data);
+        // header('Content-Type: application/json');
+        // $list = $this->
+    }
+    
+    public function addPlan() {
+        header('Content-Type: application/json');
+        $data = $this->input->post();
+        date_default_timezone_set('Asia/Jakarta');
+        $datetime_now = date('Y-m-d H:i:s');
+
+        $dataSave = $this->plan_model->insertPlanData([
+            'date_plan' => $data['plan_date_add'],
+            'sales_order_no' => $data['plan_so_number_add'],
+            'coloring_plan_qty'=> $data['plan_coloring_add'],
+            'tubing_plan_qty'=> $data['plan_tubing_add'],
+            'stranding_plan_qty'=> $data['plan_stranding_add'],
+            'sheathing_plan_qty'=> $data['plan_sheathing_add'],
+            'created_user_name'=> $this->session->userdata('name'),
+            'created_date_time'=> $datetime_now,
+            'is_delete'=>0 
+        ]);
+
+        echo json_encode([
+            'success' => true
+        ]);
+    }
+
+    public function editPlan() {
+        $plan_id = $this->input->post('plan_id');
+        $data = $this->plan_model->getPlanDataByID($plan_id);
+
+        echo json_encode($data);
+    }
+
+    public function updatePlan() {
+        header('Content-Type: application/json');
+        $data = $this->input->post();
+        date_default_timezone_set('Asia/Jakarta');
+        $datetime_now = date('Y-m-d H:i:s');
+
+        $dataAll = [
+            'date_plan' => $data['plan_date_edit'],
+            'sales_order_no' => $data['plan_so_number_edit'],
+            'coloring_plan_qty'=> $data['plan_coloring_edit'],
+            'tubing_plan_qty'=> $data['plan_tubing_edit'],
+            'stranding_plan_qty'=> $data['plan_stranding_edit'],
+            'sheathing_plan_qty'=> $data['plan_sheathing_edit'],
+            'updated_user_name'=> $this->session->userdata('name'),
+            'updated_date_time'=> $datetime_now,
+        ];
+
+        $dataUpdate = $this->plan_model->updatePlanData($data['plan_id_edit'],$dataAll);
+        echo json_encode([
+            'success' => true
+        ]);
     }
 
     

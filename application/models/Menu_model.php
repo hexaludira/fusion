@@ -9,12 +9,12 @@ class Menu_model extends CI_Model {
         $this->db->order_by('user_menu.sort', 'ASC');
         $menus = $this->db->get('user_menu')->result();
 
-        foreach ($menus as &$menu){
-            $menu->submenus = $this->db->get_where('user_sub_menu', [
-                'menu_id' => $menu->id,
-                'is_active' => 1
-            ])->result();
-        }
+        // foreach ($menus as &$menu){
+        //     $menu->submenus = $this->db->get_where('user_sub_menu', [
+        //         'menu_id' => $menu->id,
+        //         'is_active' => 1
+        //     ])->result();
+        // }
 
         return $menus;
     }

@@ -33,9 +33,9 @@ class MC_coloring_dashboard extends CI_Controller {
 
         header('Content-Type: application/json');
         // foreach($data as $item){
-        //     $no++;
+        //     // $no++;
         //     $row = [];
-        //     $row[] = $no;
+        //     // $row[] = $no;
         //     $row[] = $item->color;
         //     $row[] = $item->G652D;
         //     $row[] = $item->G655;

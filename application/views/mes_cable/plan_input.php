@@ -14,6 +14,9 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                   <!-- Table Plan Daily -->
+                   <?php
+                     $no = 5;
+                   ?>
                   <div class="table-responsive">
                      <table id="daily_plan_table" class="table table-bordered table-striped" cellspacing="0">
                         <thead>
@@ -31,6 +34,7 @@
                         </thead>
                         <tbody>
                            <!-- to be filled -->
+                           
                         </tbody>
                      </table>
                   </div>
@@ -76,30 +80,30 @@
                         <div class="form-group row">
                            <label for="plan_coloring_add" class="col-sm-3 col-form-label">Coloring Plan</label>
                            <div class="col-sm-6">
-                              <input type="text" class="form-control" id="plan_coloring_add" name="plan_coloring_add">
+                              <input type="number" class="form-control" id="plan_coloring_add" name="plan_coloring_add">
                            </div>
                         </div>
                         <div class="form-group row">
                            <label for="plan_tubing_add" class="col-sm-3 col-form-label">Tubing Plan</label>
                            <div class="col-sm-6">
-                              <input type="text" class="form-control" id="plan_tubing_add" name="plan_tubing_add">
+                              <input type="number" class="form-control" id="plan_tubing_add" name="plan_tubing_add">
                            </div>
                         </div>
                         <div class="form-group row">
                            <label for="plan_stranding_add" class="col-sm-3 col-form-label">Stranding Plan</label>
                            <div class="col-sm-6">
-                              <input type="text" class="form-control" id="plan_stranding_add" name="plan_stranding_add">
+                              <input type="number" class="form-control" id="plan_stranding_add" name="plan_stranding_add">
                            </div>
                         </div>
                         <div class="form-group row">
                            <label for="plan_sheathing_add" class="col-sm-3 col-form-label">Sheathing Plan</label>
                            <div class="col-sm-6">
-                              <input type="text" class="form-control" id="plan_sheathing_add" name="plan_sheathing_add">
+                              <input type="number" class="form-control" id="plan_sheathing_add" name="plan_sheathing_add">
                            </div>
                         </div>
                      </div>
                      <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary float-right">Set Plan</button>
+                        <button type="submit" class="btn btn-primary float-right" id="btn_plan_add">Set Plan</button>
                      </div>
                 </form>
             </div>
@@ -122,6 +126,11 @@
                <!-- Add form here -->
                   <form class="form-horizontal" method="post" action="" id="edit_plan_form">
                      <div class="card-body">
+                     <div class="form-group row">
+                           <div class="col-sm-6">
+                              <input type="hidden" class="form-control" id="plan_id_edit" name="plan_id_edit">
+                           </div>
+                        </div>
                         <div class="form-group row">
                            <label for="plan_date_edit" class="col-sm-3 col-form-label">Date</label>
                            <div class="col-sm-6">
@@ -142,30 +151,31 @@
                         <div class="form-group row">
                            <label for="plan_coloring_edit" class="col-sm-3 col-form-label">Coloring Plan</label>
                            <div class="col-sm-6">
-                              <input type="text" class="form-control" id="plan_coloring_edit" name="plan_coloring_edit">
+                              <input type="number" class="form-control" id="plan_coloring_edit" name="plan_coloring_edit">
                            </div>
                         </div>
                         <div class="form-group row">
                            <label for="plan_tubing_edit" class="col-sm-3 col-form-label">Tubing Plan</label>
                            <div class="col-sm-6">
-                              <input type="text" class="form-control" id="plan_tubing_edit" name="plan_tubing_edit">
+                              <input type="number" class="form-control" id="plan_tubing_edit" name="plan_tubing_edit">
                            </div>
                         </div>
                         <div class="form-group row">
                            <label for="plan_stranding_edit" class="col-sm-3 col-form-label">Stranding Plan</label>
                            <div class="col-sm-6">
-                              <input type="text" class="form-control" id="plan_stranding_edit" name="plan_stranding_edit">
+                              <input type="number" class="form-control" id="plan_stranding_edit" name="plan_stranding_edit">
                            </div>
                         </div>
                         <div class="form-group row">
                            <label for="plan_sheathing_edit" class="col-sm-3 col-form-label">Sheathing Plan</label>
                            <div class="col-sm-6">
-                              <input type="text" class="form-control" id="plan_sheathing_edit" name="plan_sheathing_edit">
+                              <input type="number" class="form-control" id="plan_sheathing_edit" name="plan_sheathing_edit">
                            </div>
                         </div>
                      </div>
                      <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary float-right">Set Plan</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary float-right" id="btn_plan_update">Set Plan</button>
                      </div>
                 </form>
             </div>
@@ -198,59 +208,158 @@
 
   <script type="text/javascript">
       $(document).ready(function(){
-         $('#daily_plan_table').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": true,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "responsive": true,
-            "buttons": ["copy", "csv", "excel", "pdf", "colvis"]
-         }).buttons().container().appendTo('#daily_plan_table_wrapper .col-md-6:eq(0)');
+         /* ======================= Show Daily Plan Data ========================= */
+         show_plan_data();
+
+         $('#plan_date_add, #plan_date_edit').datetimepicker({
+            format : 'YYYY-MM-DD'
+         });
+
+         function show_plan_data(){
+            $.ajax({
+               url : "<?= base_url('mes_cable/mc_plan_input/getPlanData')?>",
+               type: 'POST',
+               dataType: 'json',
+               // async: false,
+               success: function(response){
+                  console.log(response);
+                  if ($.fn.DataTable.isDataTable('#daily_plan_table')) {
+                     $('#daily_plan_table').DataTable().clear().destroy();
+                  }
+
+                  $('#daily_plan_table').DataTable({
+                     dom:
+                     "<'row'<'col-md-6'B><'col-md-6'f>>" +
+                     "<'row'<'col-12'tr>>" +
+                     "<'row'<'col-md-5'i><'col-md-7'p>>",
+                     // dom : 'Bfrtip',
+                     processing: true,
+                     "responsive": true,
+                     "paging": true,
+                     "lengthChange": false,
+                     "searching": true,
+                     "ordering": true,
+                     "info": true,
+                     "autoWidth": false,
+                     "responsive": true,
+                     buttons: ["copy", "csv", "excel", "pdf", "colvis"],
+                     data: response,
+                     columns: [
+                        {data: null, render: function(data, type, row, meta){
+                           return meta.row + 1;
+                        }},
+                        {data: 'date_plan'},
+                        {data: 'sales_order_no'},
+                        {data: 'coloring_plan_qty'},
+                        {data: 'tubing_plan_qty'},
+                        {data: 'stranding_plan_qty'},
+                        {data: 'sheathing_plan_qty'},
+                        {data: 'created_user_name'},
+                        {data: 'plan_id', render: function(data, type, row){
+                           return '<a href="#" class="btn btn-info btn_edit" data-id="' + data + '"><i class="fas fa-pencil-alt"></i> Edit</a>' + '<button class="btn btn-danger btn_hapus" data-id="' + data + '"><i class="fas fa-trash-can"></i> Delete</button>';
+                        }}
+                     ]
+                  });
+               }     
+            });  
+         }
+
+         /* ======================= <END>Show Daily Plan Data<END> ========================= */
+
+         /* ======================= Add Daily Plan Data ========================= */
+            $('#btn_plan_add').on('click', (function(e){
+               e.preventDefault();
+               var form_data = new FormData($('#add_plan_form')[0]);
+
+               $.ajax({
+                  url : "<?= base_url('mes_cable/mc_plan_input/addPlan')?>",
+                  type : "POST",
+                  dataType : 'json',
+                  data : form_data,
+                  contentType : false,
+                  cache : false,
+                  processData: false,
+                  success : function(response){
+                     console.log('RESPONSE:', response);
+                     if(response.success){
+                        $('#add_plan_form')[0].reset();
+                        $('#plan_add_modal').modal('hide');
+                        Swal.fire("Plan added succesfully",'','success');
+                        // $('#daily_plan_table').DataTable().ajax.reload();
+                        setInterval('location.reload()',1300);
+                     } else {
+                        Swal.fire("Adding Plan Failed",'','error');
+                     }
+                  }
+               });
+            }));
+         /* =======================<END> Add Daily Plan Data <END>========================= */
+
+         /* ======================= Show Edit Daily Plan Modal ========================= */
+            $("#daily_plan_table").on('click','.btn_edit',function(e){
+               e.preventDefault();
+               let plan_id = $(this).attr('data-id');
+               $.ajax({
+                  url: '<?= base_url('mes_cable/mc_plan_input/editPlan')?>',
+                  type: 'POST',
+                  data: {plan_id : plan_id},
+                  dataType: 'json',
+                  success: function(response){
+                     console.log(response);
+                     $('#plan_edit_modal').modal('show');
+                     $('#plan_id_edit').val(response[0].plan_id);
+                     $('#plan_date_edit').val(response[0].date_plan);
+                     $('#plan_so_number_edit').val(response[0].sales_order_no);
+                     $('#plan_coloring_edit').val(response[0].coloring_plan_qty);
+                     $('#plan_tubing_edit').val(response[0].tubing_plan_qty);
+                     $('#plan_stranding_edit').val(response[0].stranding_plan_qty);
+                     $('#plan_sheathing_edit').val(response[0].sheathing_plan_qty);
+                  }
+               });
+            })
+          /* =======================<END> Show Edit Daily Plan Modal <END>====================== */
+         
+          /* ======================= Update Daily Plan Data ========================= */
+            $("#btn_plan_update").on('click',(function(e){
+               e.preventDefault();
+               var form_data = new FormData($('#edit_plan_form')[0]);
+
+               $.ajax({
+                  url : "<?= base_url('mes_cable/mc_plan_input/updatePlan')?>",
+                  type : "POST",
+                  dataType : 'json',
+                  data : form_data,
+                  contentType : false,
+                  cache : false,
+                  processData: false,
+                  success : function(response){
+                     console.log('RESPONSE:', response);
+                     if(response.success){
+                        $('#edit_plan_form')[0].reset();
+                        $('#plan_edit_modal').modal('hide');
+                        Swal.fire("Plan updated succesfully",'','success');
+                        // $('#daily_plan_table').DataTable().ajax.reload();
+                        setInterval('location.reload()',1300);
+                     } else {
+                        Swal.fire("Update Plan Failed",'','error');
+                     }
+                  }
+               });
+            }));
+          /* =======================<END> Update Daily Plan Data <END>========================= */
+        
+         //  $('#daily_plan_table').DataTable({
+         //    "paging": true,
+         //    "lengthChange": false,
+         //    "searching": true,
+         //    "ordering": true,
+         //    "info": true,
+         //    "autoWidth": false,
+         //    "responsive": true,
+         //    "buttons": ["copy", "csv", "excel", "pdf", "colvis"]
+         // }).buttons().container().appendTo('#daily_plan_table_wrapper .col-md-6:eq(0)');
 
       });
+
+      
   </script>
-
-  /* ======================= Menambahkan Data TAC ========================= */
-			$('#btn_tac_add').on('click', (function(e){
-        e.preventDefault();
-        var form_data = new FormData($('#add_tac_form')[0]);
-				// var tac_item_add = $('#tac_item_add').val();
-				// var system_purpose = $('#system_purpose_add').val();
-				// var system_location = $('#system_location_add').val();
-				// var system_username = $('#system_username_add').val();
-				// var system_password = $('#system_password_add').val();
-
-				$.ajax({
-					url : "it/administrator/masterdata/tac/tac_controller.php",
-					type : "POST",
-					data : form_data,
-          contentType : false,
-          cache : false,
-          processData: false,
-					success : function(response){
-            if(response == "1"){
-              Swal.fire("Data added succesfully",'','success');
-            } else {
-              Swal.fire("Adding Data Failed",'','error');
-            }
-            //Swal.fire(response);
-
-            $('#tac_item_add').val("");
-            $('#tac_type_select_add').val(null).trigger('change');
-            $('#tac_function_add').val("");
-            $('#tac_location_add').val("");
-            $('#tac_price_add').val("");
-            $('#tac_purchasedate_add').val(null).trigger('change');
-            $('#label_image_add').text("Choose file");
-            $('#tac_quantity_add').val("");
-            $('#tac_unit_select_add').val(null).trigger('change');
-
-            $('#tac_add_modal').modal("hide");
-            setInterval('location.reload()',1300);
-					}
-				});
-			}));
-
-                  

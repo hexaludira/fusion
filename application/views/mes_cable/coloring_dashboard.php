@@ -130,13 +130,19 @@
          "columns": [
             // {"data" : "No"},
             {"data" : "color"},
-            {"data" : "G652D"},
-            {"data" : "G655"},
-            {"data" : "G657A1"},
-            {"data" : "G657A1_200"},
-            {"data" : "G657A2"}
+            {"data" : "G652D", "render" : renderDivideAndFormat},
+            {"data" : "G655", "render" : renderDivideAndFormat},
+            {"data" : "G657A1", "render" : renderDivideAndFormat},
+            {"data" : "G657A1_200", "render" : renderDivideAndFormat},
+            {"data" : "G657A2", "render" : renderDivideAndFormat}
          ]
       });
+
+      // Function to format the data output
+      function renderDivideAndFormat(value) {
+         if (!value || isNaN(value)) return "0";
+         return (value / 1000).toLocaleString('id-ID', { minimumFractionDigits: 1 }) + " Km";
+      }
 
       //Show coloring data button
       $('#btn_show_data_coloring').on('click', function(e){
@@ -162,7 +168,11 @@
                $('#percent_ckm').text(response.percentage + '%');
             },
             error: function(){
-               Swal.fire('Failed to get Coloring Data'); 
+               Swal.fire({
+                  title: "Oopss",
+                  text: "Failed to get Coloring data",
+                  icon: "error"
+               }); 
             }
          });
       });

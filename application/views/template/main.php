@@ -73,6 +73,7 @@
   <script src="<?= base_url('assets/plugins/datatables-buttons/js/buttons.html5.min.js')?>"></script>
   <script src="<?= base_url('assets/plugins/datatables-buttons/js/buttons.print.min.js')?>"></script>
   <script src="<?= base_url('assets/plugins/datatables-buttons/js/buttons.colVis.min.js')?>"></script>
+  <script src="<?= base_url('assets/plugins/just-validate/just-validate.js')?>"></script>
   
 
 </body>
