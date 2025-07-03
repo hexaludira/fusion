@@ -21,8 +21,10 @@ class Plan_daily_model extends CI_Model {
         return $this->db->update('mc_daily_plan_tbl', $data);
     }
 
-    public function deletePlanData($plan_id) {
+    public function deletePlanData($plan_id, $data) {
+        // $this->db->where('plan_id', $plan_id);
+        // return $this->db->delete('mc_daily_plan_tbl');
         $this->db->where('plan_id', $plan_id);
-        return $this->db->delete('mc_daily_plan_tbl');
+        return $this->db->update('mc_daily_plan_tbl', $data);
     }   
 }

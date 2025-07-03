@@ -8,7 +8,7 @@ class Coloring_dashboard_model extends CI_Model {
         parent::__construct();
         $this->db_mes = $this->load->database('db_mes', TRUE);
     }
-    public function get_coloring_summary($start, $end){
+    public function get_coloring_plan($start, $end){
         // $start_input = date('Y-m-d', strtotime($start));
         // $end_input = date('Y-m-d', strtotime($end));
         $plan_data = $this->db->query("SELECT SUM(coloring_plan_qty) as coloring_plan, SUM(tubing_plan_qty) as tubing_plan, SUM(stranding_plan_qty) as stranding_plan, SUM(sheathing_plan_qty) as sheathing_plan FROM mc_daily_plan_tbl WHERE date_plan >= '$start' AND date_plan <= '$end'
@@ -110,7 +110,7 @@ class Coloring_dashboard_model extends CI_Model {
         return $actual_data;
     }
 
-    public function get_actual_grand_total ($start, $end){
+    public function get_coloring_grand_total ($start, $end){
         $actual_grand_total = $this->db_mes->query("WITH RankedInspections AS (
             SELECT
                 A.inspection_no,

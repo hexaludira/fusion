@@ -24,10 +24,10 @@
                               <th>No</th>
                               <th>Date</th>
                               <th>Sales Order No</th>
-                              <th>Coloring Plan Qty</th>
-                              <th>Tubing Plan Qty</th>
-                              <th>Stranding Plan Qty</th>
-                              <th>Sheathing Plan Qty</th>
+                              <th>Coloring Plan</th>
+                              <th>Tubing Plan</th>
+                              <th>Stranding Plan</th>
+                              <th>Sheathing Plan</th>
                               <th>Planned by</th>
                               <th>Action</th>
                            </tr>
@@ -198,7 +198,7 @@
           <h4>Are you sure you want to delete plan?</h4>
 				</div>
 				<div class="modal-footer">
-          <button type="button" class="btn btn-danger" id="btn_confirm_delete">Delete</button>
+               <button type="button" class="btn btn-danger" id="btn_confirm_delete">Delete</button>
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				</div>
 			</div>
@@ -248,7 +248,15 @@
                         {data: null, render: function(data, type, row, meta){
                            return meta.row + 1;
                         }},
-                        {data: 'date_plan'},
+                        {data: 'date_plan',
+                           render: function(data, type, row){
+                              if(data) {
+                                 const dateParts = data.split("-");
+                                 return dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0];
+                              }
+                              return '';
+                           }
+                        },
                         {data: 'sales_order_no'},
                         {data: 'coloring_plan_qty'},
                         {data: 'tubing_plan_qty'},
@@ -256,7 +264,7 @@
                         {data: 'sheathing_plan_qty'},
                         {data: 'created_user_name'},
                         {data: 'plan_id', render: function(data, type, row){
-                           return '<a href="#" class="btn btn-info btn_edit" data-id="' + data + '"><i class="fas fa-pencil-alt"></i> Edit</a>' + '<button class="btn btn-danger btn_hapus" data-id="' + data + '"><i class="fas fa-trash-can"></i> Delete</button>';
+                           return '<button class="btn btn-info btn-sm btn_edit me-2" data-id="' + data + '"><i class="fas fa-pencil-alt"></i> Edit</button> ' + '<button class="btn btn-danger btn-sm btn_delete" data-id="' + data + '"><i class="fas fa-trash-can"></i> Delete</button>';
                         }}
                      ]
                   });
@@ -347,7 +355,30 @@
                });
             }));
           /* =======================<END> Update Daily Plan Data <END>========================= */
-        
+
+         /* ============================ Delete Plan =============================== */
+            $('#daily_plan_table').on('click','.btn_delete', function(){
+               let plan_id = $(this).attr('data-id');
+               $('#plan_delete_modal').modal('show');
+               $('#btn_confirm_delete').on('click', function(){
+                  $.ajax({
+                     url: '<?= base_url('mes_cable/mc_plan_input/deletePlan')?>',
+                     type: 'POST',
+                     data : {plan_id_delete : plan_id},
+                     success : function(response){
+                        $('#plan_delete_modal').modal('hide');
+                        if(response.success){
+                           Swal.fire("Plan data has been deleted",'','success');
+                        } else {
+                           Swal.fire("Plan data failed to delete",'','error');
+                        }
+                        setInterval('location.reload()',1300);
+                     }
+                  });
+               });
+            });
+
+         /* ============================<END> Delete Plan <END>=============================== */
          //  $('#daily_plan_table').DataTable({
          //    "paging": true,
          //    "lengthChange": false,

@@ -12,7 +12,7 @@
     <div class="col">
 			<div class="card">
 				<div class="card-header mt-2">
-               <form class="form-horizontal" method="post" action="" id="add_plan_form">
+               <form class="form-horizontal" method="post" action="" id="date_range_form">
                   <div class="form-group row">
                      <label class="col-md-auto col-form-label">Date Range</label>
                      <div class="col-md-2">
@@ -50,6 +50,9 @@
 									<h5>Actual : <span id="actual_ckm">-</span> Km</h5>
 									<h5>Percentage : <span id="percent_ckm"> %</span></h5>
 								</div>
+                        <div class="icon">
+                           <i class="fas fa-road-barrier"></i>
+                        </div>
 							</div>
 						</div>
 					</div>
@@ -60,8 +63,12 @@
                         <table id="coloring_detail_table" class="table table-bordered table-striped" cellspacing="0">
                            <thead>
                               <tr>
+                                 <th rowspan="2" class="text-center">Color</th>
+                                 <th colspan="5" class="text-center">Type</th>
+                              </tr>
+                              <tr>
                                  <!-- <th>No</th> -->
-                                 <th>Color</th>
+                                 <!-- <th>Color</th> -->
                                  <th>G652D</th>
                                  <th>G655</th>
                                  <th>G657A1</th>
@@ -81,9 +88,6 @@
 			</div>
     </div>
   </div>
-	<!-- End Select Period -->
-
-
 </div>
 <script type="text/javascript">
     $(document).ready(function(){
@@ -144,7 +148,7 @@
          return (value / 1000).toLocaleString('id-ID', { minimumFractionDigits: 1 }) + " Km";
       }
 
-      //Show coloring data button
+      //Show coloring data
       $('#btn_show_data_coloring').on('click', function(e){
          e.preventDefault();
          let startDate = $('#coloring_date_start').val();

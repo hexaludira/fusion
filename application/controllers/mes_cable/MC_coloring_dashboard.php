@@ -27,7 +27,7 @@ class MC_coloring_dashboard extends CI_Controller {
     public function load_coloring_table(){
         $start = $this->input->post('start_date');
         $end = $this->input->post('end_date');
-        $no = $this->input->post('start');
+        // $no = $this->input->post('start');
 
         $data = $this->coloring_model->get_coloring_details($start,$end);
 
@@ -61,9 +61,9 @@ class MC_coloring_dashboard extends CI_Controller {
         // echo $start;
         // echo $end;
 
-        $data = $this->coloring_model->get_coloring_summary($start,$end);
+        $data = $this->coloring_model->get_coloring_plan($start,$end);
         // $data_actual = $this->plan_model->get_actual_coloring($start,$end);
-        $data_grand_total = $this->coloring_model->get_actual_grand_total($start,$end);
+        $data_grand_total = $this->coloring_model->get_coloring_grand_total($start,$end);
 
         $plan = $data->coloring_plan;
         $actual_total = $data_grand_total->grand_total; 

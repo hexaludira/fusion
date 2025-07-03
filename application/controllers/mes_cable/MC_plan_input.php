@@ -84,5 +84,24 @@ class MC_plan_input extends CI_Controller {
         ]);
     }
 
+    public function deletePlan() {
+        header('Content-Type: application/json');
+        $plan_id_delete = $this->input->post('plan_id_delete');
+        date_default_timezone_set('Asia/Jakarta');
+        $datetime_now = date('Y-m-d H:i:s');
+
+        $dataAll = [
+            'updated_user_name'=> $this->session->userdata('name'),
+            'updated_date_time'=> $datetime_now,
+            'is_delete'=> '1',
+        ];
+
+        $dataDelete = $this->plan_model->deletePlanData($plan_id_delete, $dataAll);
+
+        echo json_encode([
+            'success'=> true
+        ]);
+    }
+
     
 }
