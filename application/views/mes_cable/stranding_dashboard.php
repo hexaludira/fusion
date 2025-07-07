@@ -3,7 +3,7 @@
 	<!-- Select period -->
    <div class="row">
       <div class="col">
-         <h3 class="mt-1">Welcome <?= $this->session->userdata('name') ?>, to Coloring Dashboard!</h3>
+         <h3 class="mt-1">Welcome <?= $this->session->userdata('name') ?>, to Stranding Dashboard!</h3>
          <!-- <p class="lead">Ini adalah main dashboard MES Cable.</p> -->
       </div>
    </div>
@@ -17,8 +17,8 @@
                      <label class="col-md-auto col-form-label">Date Range</label>
                      <div class="col-md-2">
                         <div class="input-group date" data-target-input="nearest">
-                           <input type="text" class="form-control datetimepicker-input" data-target="#coloring_date_start" id="coloring_date_start" name="coloring_date_start">
-                           <div class="input-group-append" data-target="#coloring_date_start" data-toggle="datetimepicker">
+                           <input type="text" class="form-control datetimepicker-input" data-target="#stranding_date_start" id="stranding_date_start" name="stranding_date_start">
+                           <div class="input-group-append" data-target="#stranding_date_start" data-toggle="datetimepicker">
                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                            </div>
                         </div>
@@ -28,14 +28,14 @@
                      </div>
                      <div class="col-md-2">
                         <div class="input-group date" data-target-input="nearest">
-                           <input type="text" class="form-control datetimepicker-input" data-target="#coloring_date_end" id="coloring_date_end" name="coloring_date_end">
-                           <div class="input-group-append" data-target="#coloring_date_end" data-toggle="datetimepicker">
+                           <input type="text" class="form-control datetimepicker-input" data-target="#stranding_date_end" id="stranding_date_end" name="stranding_date_end">
+                           <div class="input-group-append" data-target="#stranding_date_end" data-toggle="datetimepicker">
                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                            </div>
                         </div>
                      </div>
                      <div class="col-md-2">
-                        <button type="submit" class="btn btn-primary" id="btn_show_data_coloring">Show Data</button>
+                        <button type="submit" class="btn btn-primary" id="btn_show_data_stranding">Show Data</button>
                      </div>
                   </div>
                </form>
@@ -43,41 +43,36 @@
 				<div class="card-body">
 					<div class="row">
 						<div class="col-lg-3 mx-3">
-							<div class="small-box bg-info">
+							<div class="small-box bg-success">
 								<div class="inner">
 									<h3>Cable KM</h3>
-						         <h5>Plan : <span id="plan_ckm">-</span> Km</h5>
-									<h5>Actual : <span id="actual_ckm">-</span> Km</h5>
-									<h5>Percentage : <span id="percent_ckm"> %</span></h5>
+						         <h5>Plan : <b><span id="plan_ckm">-</span> Km</b></h5>
+									<h5>Actual : <b><span id="actual_ckm">-</span> Km</b></h5>
+									<h5>Percentage : <b><span id="percent_ckm"> %</span></b></h5>
 								</div>
                         <div class="icon">
-                           <i class="fas fa-road-barrier"></i>
+                           <i class="fas fa-xmarks-lines"></i>
                         </div>
 							</div>
 						</div>
 					</div>
-               <!-- Data table for coloring -->
+               <!-- Data table for stranding -->
+                <div class="row">
+                </div>
                 <div class="row">
                   <div class="col-md-12">
                      <div class="table-responsive">
-                        <table id="coloring_detail_table" class="table table-bordered table-striped" cellspacing="0">
+                        <table id="stranding_detail_table" class="table table-bordered table-striped" cellspacing="0">
                            <thead>
-                              <tr>
-                                 <th rowspan="2" class="text-center">Color</th>
-                                 <th colspan="5" class="text-center">Type</th>
-                              </tr>
-                              <tr>
-                                 <!-- <th>No</th> -->
-                                 <!-- <th>Color</th> -->
-                                 <th>G652D</th>
-                                 <th>G655</th>
-                                 <th>G657A1</th>
-                                 <th>G657A1-200</th>
-                                 <th>G657A2</th>
-                              </tr>
+                            <tr>
+                                <!-- <th rowspan="2">No</th> -->
+                                <th class="text-center">Material No.</th>
+                                <th class="text-center">Material Name</th>
+                                <th class="text-center">Production Length (Km)</th>
+                            </tr>
                            </thead>
                            <tbody>
-
+                              <!-- to be filled -->
                            </tbody>
                         </table>
                      </div>
@@ -88,29 +83,19 @@
 			</div>
     </div>
   </div>
+	<!-- End Select Period -->
+
+
 </div>
 <script type="text/javascript">
     $(document).ready(function(){
       //datepicker init
-      $('#coloring_date_start, #coloring_date_end').datetimepicker({
+      $('#stranding_date_start, #stranding_date_end').datetimepicker({
     	format : 'YYYY-MM-DD'
       });
 
-      //Datatables
-      // $('#coloring_detail_table').DataTable({
-      //       "paging": true,
-      //       "lengthChange": false,
-      //       "searching": true,
-      //       "ordering": true,
-      //       "info": true,
-      //       "autoWidth": false,
-      //       "responsive": true,
-      //       "buttons": ["copy", "csv", "excel", "pdf", "colvis"]
-      //    }).buttons().container().appendTo('#coloring_detail_table_wrapper .col-md-6:eq(0)');
-      
-
-      // Server Side DataTables
-      var table = $('#coloring_detail_table').DataTable({
+      // Stranding detail datatables
+      var table = $('#stranding_detail_table').DataTable({
          dom : 'Bfrtip',
          processing: true,
          serverSide: false,
@@ -123,22 +108,25 @@
          "responsive": true,
          buttons: ["copy", "csv", "excel", "pdf", "colvis"],
          ajax: {
-            url: "<?= base_url('mes_cable/mc_coloring_dashboard/load_coloring_table')?>",
+            url: "<?= base_url('mes_cable/mc_stranding_dashboard/load_stranding_table')?>",
             type: "POST",
             data: function(d){
-               d.start_date = $('#coloring_date_start').val();
-               d.end_date = $('#coloring_date_end').val();
+               d.start_date = $('#stranding_date_start').val();
+               d.end_date = $('#stranding_date_end').val();
             },
             "dataSrc" : "data"
          },
+         // "columnDefs" : [
+         //    {
+         //       "targets": [1],
+         //       "visible": false,
+         //       "searchable": false
+         //    }
+         // ],
          "columns": [
-            // {"data" : "No"},
-            {"data" : "color"},
-            {"data" : "G652D", "render" : renderDivideAndFormat},
-            {"data" : "G655", "render" : renderDivideAndFormat},
-            {"data" : "G657A1", "render" : renderDivideAndFormat},
-            {"data" : "G657A1_200", "render" : renderDivideAndFormat},
-            {"data" : "G657A2", "render" : renderDivideAndFormat}
+            {"data" : "matnr"},
+            {"data" : "name"},
+            {"data" : "production_length", "render" : renderDivideAndFormat},
          ]
       });
 
@@ -148,18 +136,18 @@
          return (value / 1000).toLocaleString('en-US', { minimumFractionDigits: 1 }) + " Km";
       }
 
-      //Show coloring data
-      $('#btn_show_data_coloring').on('click', function(e){
+      //Show stranding data button
+      $('#btn_show_data_stranding').on('click', function(e){
          e.preventDefault();
-         let startDate = $('#coloring_date_start').val();
-         let endDate = $('#coloring_date_end').val();
+         let startDate = $('#stranding_date_start').val();
+         let endDate = $('#stranding_date_end').val();
 
          // Reload DataTable
-         $('#coloring_detail_table').DataTable().ajax.reload();
+         $('#stranding_detail_table').DataTable().ajax.reload();
 
          // Get data for Cable KM card
          $.ajax({
-            url: '<?= base_url('mes_cable/mc_coloring_dashboard/get_coloring_km_summary')?>',
+            url: '<?= base_url('mes_cable/mc_stranding_dashboard/get_stranding_summary')?>',
             type: 'POST',
             dataType: 'json',
             data: {
@@ -174,7 +162,7 @@
             error: function(){
                Swal.fire({
                   title: "Oopss",
-                  text: "Failed to get Coloring data",
+                  text: "Failed to get Stranding data",
                   icon: "error"
                }); 
             }

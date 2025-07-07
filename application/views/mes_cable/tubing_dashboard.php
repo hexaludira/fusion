@@ -46,9 +46,9 @@
 							<div class="small-box bg-warning">
 								<div class="inner">
 									<h3>Cable KM</h3>
-						            <h5>Plan : <span id="plan_ckm">-</span> Km</h5>
-									<h5>Actual : <span id="actual_ckm">-</span> Km</h5>
-									<h5>Percentage : <span id="percent_ckm"> %</span></h5>
+						         <h5>Plan : <b><span id="plan_ckm">-</span> Km</b></h5>
+									<h5>Actual : <b><span id="actual_ckm">-</span> Km</b></h5>
+									<h5>Percentage : <b><span id="percent_ckm"> %</span></b></h5>
 								</div>
                         <div class="icon">
                            <i class="fas fa-ring"></i>
@@ -166,7 +166,7 @@
       // Function to format the data output
       function renderDivideAndFormat(value) {
          if (!value || isNaN(value)) return "0";
-         return (value / 1000).toLocaleString('id-ID', { minimumFractionDigits: 1 }) + " Km";
+         return (value / 1000).toLocaleString('en-US', { minimumFractionDigits: 1 }) + " Km";
       }
 
       //Show tubing data button
@@ -195,7 +195,7 @@
             error: function(){
                Swal.fire({
                   title: "Oopss",
-                  text: "Failed to get Coloring data",
+                  text: "Failed to get Tubing data",
                   icon: "error"
                }); 
             }
