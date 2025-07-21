@@ -21,16 +21,20 @@
                      <table id="daily_plan_table" class="table table-bordered table-striped" cellspacing="0">
                         <thead>
                            <tr>
-                              <th>No</th>
-                              <th>Date</th>
-                              <th>Sales Order No</th>
-                              <th>Coloring Plan</th>
-                              <th>Tubing Plan</th>
-                              <th>Stranding Plan</th>
-                              <th>Sheathing Plan</th>
-                              <th>Planned by</th>
-                              <th>Action</th>
+                              <th rowspan="2">No</th>
+                              <th rowspan="2">Date</th>
+                              <th rowspan="2">Sales Order No</th>
+                              <th rowspan="2">Coloring Plan</th>
+                              <th rowspan="2">Tubing Plan</th>
+                              <th rowspan="2">Stranding Plan</th>
+                              <th colspan="2">Sheathing Plan</th>
+                              <th rowspan="2">Planned by</th>
+                              <th rowspan="2">Action</th>
                            </tr>
+                           <tr>
+                              <th>CKM</th>
+                              <th>FKM</th>
+                           </tr>                          
                         </thead>
                         <tbody>
                            <!-- to be filled -->
@@ -60,6 +64,9 @@
                <!-- Add form here -->
                   <form class="form-horizontal" method="post" action="" id="add_plan_form">
                      <div class="card-body">
+                        <div class="form-group row">
+                              <i><h6>*Please input the plan in Km</h6></i>
+                           </div>
                         <div class="form-group row">
                            <label for="plan_date_add" class="col-sm-3 col-form-label">Date</label>
                            <div class="col-sm-6">
@@ -96,7 +103,7 @@
                            </div>
                         </div>
                         <div class="form-group row">
-                           <label for="plan_sheathing_add" class="col-sm-3 col-form-label">Sheathing Plan</label>
+                           <label for="plan_sheathing_ckm_add" class="col-sm-3 col-form-label">Sheathing Plan</label>
                            <div class="col-sm-6">
                               <input type="number" class="form-control" id="plan_sheathing_add" name="plan_sheathing_add">
                            </div>
@@ -258,10 +265,11 @@
                            }
                         },
                         {data: 'sales_order_no'},
-                        {data: 'coloring_plan_qty'},
-                        {data: 'tubing_plan_qty'},
-                        {data: 'stranding_plan_qty'},
-                        {data: 'sheathing_plan_qty'},
+                        {data: 'coloring_plan_qty', render: renderDivideAndFormat},
+                        {data: 'tubing_plan_qty', render: renderDivideAndFormat},
+                        {data: 'stranding_plan_qty', render: renderDivideAndFormat},
+                        {data: 'sheathing_plan_ckm_qty', render: renderDivideAndFormat},
+                        {data: 'sheathing_plan_fkm_qty', render: renderDivideAndFormat},
                         {data: 'created_user_name'},
                         {data: 'plan_id', render: function(data, type, row){
                            return '<button class="btn btn-info btn-sm btn_edit me-2" data-id="' + data + '"><i class="fas fa-pencil-alt"></i> Edit</button> ' + '<button class="btn btn-danger btn-sm btn_delete" data-id="' + data + '"><i class="fas fa-trash-can"></i> Delete</button>';
@@ -273,6 +281,13 @@
          }
 
          /* ======================= <END>Show Daily Plan Data<END> ========================= */
+
+         // Function to format the data output
+         function renderDivideAndFormat(value) {
+            let num = parseFloat(value);
+            if (!value || isNaN(num)) return "0";
+            return (num).toLocaleString('en-US', { minimumFractionDigits: 0 });
+         }
 
          /* ======================= Add Daily Plan Data ========================= */
             $('#btn_plan_add').on('click', (function(e){

@@ -12,6 +12,7 @@ class MC_plan_input extends CI_Controller {
 
     public function index() {
         $data['title'] = 'MES Cable-Plan Input';
+        $data['sidebar_title'] = 'Dashboard - MES Cable';
         $data['sidebar'] = 'template/sidebar';
         $data['content'] = 'mes_cable/plan_input';
         $data['menus'] = $this->Menu_model->getMenuWithSub($this->session->userdata('role_id'));

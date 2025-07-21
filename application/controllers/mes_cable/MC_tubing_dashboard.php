@@ -12,6 +12,7 @@ class MC_tubing_dashboard extends CI_Controller {
 
     public function index(){
         $data['title'] = 'MES Cable-Tubing Dashboard';
+        $data['sidebar_title'] = 'Dashboard - MES Cable';
         $data['sidebar'] = 'template/sidebar';
         $data['content'] = 'mes_cable/tubing_dashboard';
         $data['menus'] = $this->Menu_model->getMenuWithSub($this->session->userdata('role_id'));

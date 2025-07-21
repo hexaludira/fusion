@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <a href="<?= base_url('dashboard') ?>" class="brand-link">
-    <span class="brand-text font-weight-bold">Dashboard IT</span>
+    <span class="brand-text font-weight-bold"><?= $sidebar_title;?></span>
   </a>
   <div class="sidebar">
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">

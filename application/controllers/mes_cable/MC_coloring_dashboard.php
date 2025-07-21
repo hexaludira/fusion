@@ -7,11 +7,14 @@ class MC_coloring_dashboard extends CI_Controller {
         parent::__construct();
         check_login();
         $this->load->model('Menu_model');
+        // sleep(1);
+        usleep(500 * 1000);
         $this->load->model('mes_cable/Coloring_dashboard_model', 'coloring_model');
     }
 
     public function index() {
         $data['title'] = 'MES Cable-Coloring Dashboard';
+        $data['sidebar_title'] = 'Dashboard - MES Cable';
         $data['sidebar'] = 'template/sidebar';
         $data['content'] = 'mes_cable/coloring_dashboard';
         $data['menus'] = $this->Menu_model->getMenuWithSub($this->session->userdata('role_id'));

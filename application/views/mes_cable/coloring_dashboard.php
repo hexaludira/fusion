@@ -46,9 +46,9 @@
 							<div class="small-box bg-info">
 								<div class="inner">
 									<h3>Cable KM</h3>
-						         <h5>Plan : <span id="plan_ckm">-</span> Km</h5>
-									<h5>Actual : <span id="actual_ckm">-</span> Km</h5>
-									<h5>Percentage : <span id="percent_ckm"> %</span></h5>
+						         <h5>Plan : <b><span id="plan_ckm">-</span> Km</b></h5>
+									<h5>Actual : <b><span id="actual_ckm">-</span> Km</b></h5>
+									<h5>Percentage : <b><span id="percent_ckm"> %</span></b></h5>
 								</div>
                         <div class="icon">
                            <i class="fas fa-road-barrier"></i>
@@ -167,7 +167,7 @@
                end_date : endDate
             },
             success: function(response) {
-               $('#plan_ckm').text(response.plan);
+               $('#plan_ckm').text(response.plan, render : renderDivideAndFormat);
                $('#actual_ckm').text(response.actual_total);
                $('#percent_ckm').text(response.percentage + '%');
             },
