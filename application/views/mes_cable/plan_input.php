@@ -27,7 +27,7 @@
                               <th rowspan="2">Coloring Plan</th>
                               <th rowspan="2">Tubing Plan</th>
                               <th rowspan="2">Stranding Plan</th>
-                              <th colspan="2">Sheathing Plan</th>
+                              <th colspan="2" class="text-center">Sheathing Plan</th>
                               <th rowspan="2">Planned by</th>
                               <th rowspan="2">Action</th>
                            </tr>
@@ -103,9 +103,16 @@
                            </div>
                         </div>
                         <div class="form-group row">
-                           <label for="plan_sheathing_ckm_add" class="col-sm-3 col-form-label">Sheathing Plan</label>
+                           <label for="plan_sheathing_add" class="col-sm-3 col-form-label">Sheathing Plan</label>
                            <div class="col-sm-6">
-                              <input type="number" class="form-control" id="plan_sheathing_add" name="plan_sheathing_add">
+                              <div class="row">
+                                 <div class="col-5">
+                                    <input type="number" class="form-control" id="plan_sheathing_ckm_add" name="plan_sheathing_ckm_add" placeholder="CKM">
+                                 </div>
+                                 <div class="col-5">
+                                    <input type="number" class="form-control" id="plan_sheathing_fkm_add" name="plan_sheathing_fkm_add" placeholder="FKM">
+                                 </div>
+                              </div>  
                            </div>
                         </div>
                      </div>
@@ -176,7 +183,14 @@
                         <div class="form-group row">
                            <label for="plan_sheathing_edit" class="col-sm-3 col-form-label">Sheathing Plan</label>
                            <div class="col-sm-6">
-                              <input type="number" class="form-control" id="plan_sheathing_edit" name="plan_sheathing_edit">
+                              <div class="row">
+                                 <div class="col-5">
+                                    <input type="number" class="form-control" id="plan_sheathing_ckm_edit" name="plan_sheathing_ckm_edit" placeholder="CKM">
+                                 </div>
+                                 <div class="col-5">
+                                    <input type="number" class="form-control" id="plan_sheathing_fkm_edit" name="plan_sheathing_fkm_edit" placeholder="FKM">
+                                 </div>
+                              </div>  
                            </div>
                         </div>
                      </div>

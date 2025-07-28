@@ -44,7 +44,8 @@ class MC_plan_input extends CI_Controller {
             'coloring_plan_qty'=> $data['plan_coloring_add'],
             'tubing_plan_qty'=> $data['plan_tubing_add'],
             'stranding_plan_qty'=> $data['plan_stranding_add'],
-            'sheathing_plan_qty'=> $data['plan_sheathing_add'],
+            'sheathing_plan_ckm_qty'=> $data['plan_sheathing_ckm_add'],
+            'sheathing_plan_fkm_qty'=> $data['plan_sheathing_fkm_add'],
             'created_user_name'=> $this->session->userdata('name'),
             'created_date_time'=> $datetime_now,
             'is_delete'=>0 
@@ -74,7 +75,8 @@ class MC_plan_input extends CI_Controller {
             'coloring_plan_qty'=> $data['plan_coloring_edit'],
             'tubing_plan_qty'=> $data['plan_tubing_edit'],
             'stranding_plan_qty'=> $data['plan_stranding_edit'],
-            'sheathing_plan_qty'=> $data['plan_sheathing_edit'],
+            'sheathing_plan_ckm_qty'=> $data['plan_sheathing_ckm_edit'],
+            'sheathing_plan_fkm_qty'=> $data['plan_sheathing_fkm_edit'],
             'updated_user_name'=> $this->session->userdata('name'),
             'updated_date_time'=> $datetime_now,
         ];
