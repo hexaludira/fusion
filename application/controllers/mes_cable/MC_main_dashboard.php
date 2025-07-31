@@ -7,6 +7,7 @@ class MC_main_dashboard extends CI_Controller {
         parent::__construct();
         check_login();
         $this->load->model('Menu_model');
+        $this->load->model('mes_cable/Main_dashboard_model','main_model');
     }
 
     public function index() {
@@ -22,6 +23,60 @@ class MC_main_dashboard extends CI_Controller {
         // }
         
         $this->load->view('template/main', $data); 
+    }
+
+    public function load_main_dashboard_today(){
+        $data_plan = $this->main_model->get_total_plan_by_today();
+        $data_actual = $this->main_model->get_actual_by_today();
+        
+        $plan_ckm = $data_plan->sheathing_plan_ckm;
+        $plan_fkm = $data_plan->sheathing_plan_fkm;
+        $actual_ckm = $data_actual->grand_total_ckm / 1000;
+        $actual_fkm = $data_actual->grand_total_fkm / 1000;
+
+        $plan_ckm = is_null($plan_ckm) ? 0 : $plan_ckm;
+        $plan_fkm = is_null($plan_fkm) ? 0 : $plan_fkm;
+
+        if(($plan_ckm == 0) && ($plan_fkm == 0)){
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Plan CKM and FKM is not inputted yet'
+            ]);
+            return;
+        } else {
+            echo json_encode([
+                'plan_ckm' => $plan_ckm,
+                'actual_ckm' => $actual_ckm,
+                'percentage_ckm' => round(($actual_ckm / $plan_ckm) * 100,1),
+                'plan_fkm' => $plan_fkm,
+                'actual_fkm' => $actual_fkm,
+                'percentage_fkm' => round(($actual_fkm / $plan_fkm) * 100,1)
+            ]);
+        }
+
+    }
+
+    public function load_main_dashboard_month(){
+        $data_plan = $this->main_model->get_total_plan_by_month();
+        $data_actual = $this->main_model->get_actual_by_month();
+
+        $plan_ckm = $data_plan->sheathing_plan_ckm;
+        $plan_fkm = $data_plan->sheathing_plan_fkm;
+        $actual_ckm = $data_actual->grand_total_ckm / 1000;
+        $actual_fkm = $data_actual->grand_total_fkm / 1000;
+
+        echo json_encode([
+            'plan_ckm' => $plan_ckm,
+            'actual_ckm' => $actual_ckm,
+            'percentage_ckm' => round(($actual_ckm / $plan_ckm) * 100,1),
+            'plan_fkm' => $plan_fkm,
+            'actual_fkm' => $actual_fkm,
+            'percentage_fkm' => round(($actual_fkm / $plan_fkm) * 100,1)
+        ]);
+    }
+
+    public function load_main_dashboard_year(){
+        
     }
 
     

@@ -39,8 +39,8 @@ class MC_sheathing_dashboard extends CI_Controller {
 
         $plan_ckm = $data->sheathing_plan_ckm;
         $plan_fkm = $data->sheathing_plan_fkm;
-        $actual_total_ckm = $data_grand_total->grand_total_ckm;
-        $actual_total_fkm = $data_grand_total->grand_total_fkm;
+        $actual_total_ckm = $data_grand_total->grand_total_ckm / 1000;
+        $actual_total_fkm = $data_grand_total->grand_total_fkm / 1000;
 
         echo json_encode([
             "plan_ckm"=> $plan_ckm,
