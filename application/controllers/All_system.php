@@ -13,6 +13,7 @@ class All_system extends CI_Controller {
         $data['title'] = 'All System';
         $data['sidebar'] = 'template/main_sidebar';
         $data['content'] = 'all_system';
+        $role = $this->session->userdata('user_role');
         // $data['menus'] = $this->Menu_model->getMenuWithSub($this->session->userdata('role_id'));
         // if($this->session->userdata('role_id') == '2'){ //role user
         //     $data['content'] = 'dashboard/user';

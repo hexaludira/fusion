@@ -40,7 +40,7 @@ class MC_main_dashboard extends CI_Controller {
         if(($plan_ckm == 0) && ($plan_fkm == 0)){
             echo json_encode([
                 'status' => 'error',
-                'message' => 'Plan CKM and FKM is not inputted yet'
+                'message' => 'Plan CKM and FKM have not been inputted for today'
             ]);
             return;
         } else {
@@ -65,18 +65,46 @@ class MC_main_dashboard extends CI_Controller {
         $actual_ckm = $data_actual->grand_total_ckm / 1000;
         $actual_fkm = $data_actual->grand_total_fkm / 1000;
 
-        echo json_encode([
-            'plan_ckm' => $plan_ckm,
-            'actual_ckm' => $actual_ckm,
-            'percentage_ckm' => round(($actual_ckm / $plan_ckm) * 100,1),
-            'plan_fkm' => $plan_fkm,
-            'actual_fkm' => $actual_fkm,
-            'percentage_fkm' => round(($actual_fkm / $plan_fkm) * 100,1)
-        ]);
+        $plan_ckm = $plan_ckm ?? 0;
+        $plan_fkm = $plan_fkm ?? 0;
+
+        if(($plan_ckm == 0) && ($plan_fkm == 0)){
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'No Data for Plan CKM and Plan FKM for this month'
+            ]);
+            return;
+        } else {
+            echo json_encode([
+                'plan_ckm' => $plan_ckm,
+                'actual_ckm' => $actual_ckm,
+                'percentage_ckm' => round(($actual_ckm / $plan_ckm) * 100,1),
+                'plan_fkm' => $plan_fkm,
+                'actual_fkm' => $actual_fkm,
+                'percentage_fkm' => round(($actual_fkm / $plan_fkm) * 100,1)
+            ]);
+        }
+        
     }
 
     public function load_main_dashboard_year(){
-        
+        $data_plan = $this->main_model->get_total_plan_by_year();
+        $data_actual = $this->main_model->get_actual_by_year();
+
+        $plan_ckm = $data_plan->sheathing_plan_ckm;
+        $plan_fkm = $data_plan->sheathing_plan_fkm;
+
+        $actual_ckm = $data_actual->grand_total_ckm / 1000;
+        $actual_fkm = $data_actual->grand_total_fkm / 1000;
+
+        echo json_encode([
+            'plan_ckm' => number_format($plan_ckm,2),
+            'actual_ckm' => number_format($actual_ckm,2),
+            'percentage_ckm' => round(($actual_ckm / $plan_ckm) * 100,1),
+            'plan_fkm' => number_format($plan_fkm,2),
+            'actual_fkm' => number_format($actual_fkm,2),
+            'percentage_fkm' => round(($actual_fkm / $plan_fkm) * 100,1)
+        ]);
     }
 
     

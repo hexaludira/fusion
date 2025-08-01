@@ -262,7 +262,6 @@
                      "ordering": true,
                      "info": true,
                      "autoWidth": false,
-                     "responsive": true,
                      buttons: ["copy", "csv", "excel", "pdf", "colvis"],
                      data: response,
                      columns: [

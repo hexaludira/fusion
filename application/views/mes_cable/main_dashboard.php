@@ -55,80 +55,102 @@
 							 </div>
 						</div>
 						<div class="tab-pane" id="month_tab">
-							<div class="row justify-content-center">
-								<div class="col-lg-3 mx-3">
-									<div class="small-box bg-info">
-										<div class="inner">
-											<h3>Cable KM</h3>
-											<h5>Plan : <b><span class="plan_ckm">-</span> Km</b></h5>
-											<h5>Actual : <b><span class="actual_ckm">-</span> Km</b></h5>
-											<h5>Percentage : <b><span class="percent_ckm"> %</span></b></h5>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-3 mx-3">
-									<div class="small-box bg-success">
-										<div class="inner">
-											<h3>Fiber KM</h3>
-											<h5>Plan : <b><span class="plan_fkm">-</span> Km</b></h5>
-											<h5>Actual : <b><span class="actual_fkm">-</span> Km</b></h5>
-											<h5>Percentage : <b><span class="percent_fkm"> %</span></b></h5>
-										</div>
-									</div>
-								</div>
+							<div class="loading-spinner" style="
+								display: flex; text-align: center; 	padding: 20px;  display: flex;
+								justify-content: center;
+								align-items: center;
+								height: 200px;
+								flex-direction: column;">
+								<i class="fa fa-spinner fa-spin fa-2x text-primary"></i>
+								<p>Loading data. Please wait...</p>
 							</div>
-							<!-- Column Graph -->
-							 <div class="row justify-content-center">
-								<div class="col-5 mx-1">
-									<div id="chart_ckm_month">
-
+							<div class="dashboard-content" style="display: none;">
+								<div class="row justify-content-center">
+									<div class="col-lg-3 mx-3">
+										<div class="small-box bg-info">
+											<div class="inner">
+												<h3>Cable KM</h3>
+												<h5>Plan : <b><span class="plan_ckm">-</span> Km</b></h5>
+												<h5>Actual : <b><span class="actual_ckm">-</span> Km</b></h5>
+												<h5>Percentage : <b><span class="percent_ckm"> %</span></b></h5>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-3 mx-3">
+										<div class="small-box bg-success">
+											<div class="inner">
+												<h3>Fiber KM</h3>
+												<h5>Plan : <b><span class="plan_fkm">-</span> Km</b></h5>
+												<h5>Actual : <b><span class="actual_fkm">-</span> Km</b></h5>
+												<h5>Percentage : <b><span class="percent_fkm"> %</span></b></h5>
+											</div>
+										</div>
 									</div>
 								</div>
-								<div class="col-5 mx-1">
-									<div id="chart_fkm_month">
+								<!-- Column Graph -->
+								<div class="row justify-content-center">
+									<div class="col-5 mx-1">
+										<div id="chart_ckm_month">
 
+										</div>
+									</div>
+									<div class="col-5 mx-1">
+										<div id="chart_fkm_month">
+
+										</div>
 									</div>
 								</div>
-							 </div>
-						</div>
+							</div> <!-- .dashboard-content -->	
+						</div> <!-- This Month Tab End -->
 						<div class="tab-pane" id="year_tab">
 							<!-- <h4>This Year</h4> -->
-							<div class="row justify-content-center">
-								<div class="col-lg-3 mx-3">
-									<div class="small-box bg-info">
-										<div class="inner">
-											<h3>Cable KM</h3>
-											<h5>Plan : <b><span class="plan_ckm">-</span> Km</b></h5>
-											<h5>Actual : <b><span class="actual_ckm">-</span> Km</b></h5>
-											<h5>Percentage : <b><span class="percent_ckm"> %</span></b></h5>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-3 mx-3">
-									<div class="small-box bg-success">
-										<div class="inner">
-											<h3>Fiber KM</h3>
-											<h5>Plan : <b><span class="plan_fkm">-</span> Km</b></h5>
-											<h5>Actual : <b><span class="actual_fkm">-</span> Km</b></h5>
-											<h5>Percentage : <b><span class="percent_fkm"> %</span></b></h5>
-										</div>
-									</div>
-								</div>
+							<div class="loading-spinner" style="
+								display: flex; text-align: center; 	padding: 20px;  display: flex;
+								justify-content: center;
+								align-items: center;
+								height: 200px;
+								flex-direction: column;">
+								<i class="fa fa-spinner fa-spin fa-2x text-primary"></i>
+								<p>Loading data. Please wait...</p>
 							</div>
-							<!-- Column Graph -->
-							 <div class="row justify-content-center">
-								<div class="col-md-5 mx-1">
-									<div id="chart_ckm_year">
-
+							<div class="dashboard-content" style="display: none;">
+								<div class="row justify-content-center">
+									<div class="col-lg-3 mx-3">
+										<div class="small-box bg-info">
+											<div class="inner">
+												<h3>Cable KM</h3>
+												<h5>Plan : <b><span class="plan_ckm">-</span> Km</b></h5>
+												<h5>Actual : <b><span class="actual_ckm">-</span> Km</b></h5>
+												<h5>Percentage : <b><span class="percent_ckm"> %</span></b></h5>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-3 mx-3">
+										<div class="small-box bg-success">
+											<div class="inner">
+												<h3>Fiber KM</h3>
+												<h5>Plan : <b><span class="plan_fkm">-</span> Km</b></h5>
+												<h5>Actual : <b><span class="actual_fkm">-</span> Km</b></h5>
+												<h5>Percentage : <b><span class="percent_fkm"> %</span></b></h5>
+											</div>
+										</div>
 									</div>
 								</div>
-								<div class="col-md-5 mx-1">
-									<div id="chart_ckm_year">
+								<!-- Column Graph -->
+								<div class="row justify-content-center">
+									<div class="col-md-5 mx-1">
+										<div id="chart_ckm_year">
 
+										</div>
+									</div>
+									<div class="col-md-5 mx-1">
+										<div id="chart_fkm_year">
+
+										</div>
 									</div>
 								</div>
-							 </div>
-						</div>
+							</div> <!-- .dashboard-content -->
+						</div> <!-- This Year Tab End -->
 					</div>
 				</div>
 			</div>
@@ -150,12 +172,19 @@
 		// Get data for Cable KM and Fiber KM card by today
 		function loadDashboard(tab){
 			let container = $('#' + tab + '_tab');
+
+			container.find('.loading-spinner').show();
+			container.find('.year-dashboard-content').hide();
 			
 			$.ajax({
 				url: '<?= base_url('mes_cable/mc_main_dashboard/load_main_dashboard_')?>' + tab,
 				type: 'POST',
 				dataType: 'json',
 				success: function(response){
+					// remove the loading spinner
+					container.find('.loading-spinner').hide();
+					container.find('.dashboard-content').show();
+
 					if(response.status === 'error'){
 						Swal.fire({
 							title: "Warning",
@@ -218,7 +247,7 @@
             colors: ['#ffd449', '#4361ee'],
             series: [{
                name: 'CKM',
-               data: [parseFloat(plan_ckm), parseFloat(actual_ckm)]
+               data: [parseFloat(plan_ckm.replace(/,/g,'')), parseFloat(actual_ckm.replace(/,/g,''))]
             }],
             xaxis: {
                categories: ['Plan', 'Actual']
@@ -258,7 +287,7 @@
             colors: ['#48cae4','#2a9d8f'],
             series: [{
                name: 'FKM',
-               data: [parseFloat(plan_fkm), parseFloat(actual_fkm)]
+               data: [parseFloat(plan_fkm.replace(/,/g,'')), parseFloat(actual_fkm.replace(/,/g,''))]
             }],
             xaxis: {
                categories: ['Plan', 'Actual']
