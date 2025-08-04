@@ -6,9 +6,15 @@ class UserManagement extends CI_Controller {
         parent::__construct();
         check_login();
         $this->load->model('Menu_model');
+        $this->load->model('User_management_model');
     }
 
     public function index(){
-        $data['title'] = '';
+        $data['title'] = 'FUSION-User Management';
+        $data['sidebar-title'] = 'User Management';
+        $data['sidebar'] = 'template/sidebar';
+        $data['content'] = 'admin_area/user_management';
+
+        $this->load->view('template/main', $data);
     }
 }

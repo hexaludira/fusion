@@ -20,7 +20,15 @@
             <p>All System</p>
           </a>
         </li>
-        <li class="nav-header">
+        <?php if($role == 'Administrator') : ?>
+        <li class="nav-item">
+          <a href="<?= base_url('admin_area/usermanagement');?>" class="nav-link <?= ($this->uri->segment(2) == 'usermanagement' && $this->uri->segment(3) == '') ? 'active' : '' ?>">
+            <i class="nav-icon fa-solid fa-screwdriver-wrench"></i>
+            <p>User Management</p>
+          </a>
+        </li>
+        <?php endif;?>
+        <li class="nav-header ">
             PROFILE
         </li>
         <li class="nav-item">

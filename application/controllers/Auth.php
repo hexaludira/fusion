@@ -21,7 +21,8 @@ class Auth extends CI_Controller {
             $this->session->set_userdata([
                 'user_id' => $user->user_id,
                 'name' => $user->name,
-                'role_id' => $user->role_id
+                'role_id' => $user->role_id,
+                'role_name' => $user->role_name
             ]);
             redirect('all_system');
         } else {
