@@ -167,7 +167,7 @@
                end_date : endDate
             },
             success: function(response) {
-               $('#plan_ckm').text(response.plan, render : renderDivideAndFormat);
+               $('#plan_ckm').text(response.plan);
                $('#actual_ckm').text(response.actual_total);
                $('#percent_ckm').text(response.percentage + '%');
             },

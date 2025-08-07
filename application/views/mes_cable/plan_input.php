@@ -322,7 +322,9 @@
                         $('#plan_add_modal').modal('hide');
                         Swal.fire("Plan added succesfully",'','success');
                         // $('#daily_plan_table').DataTable().ajax.reload();
-                        setInterval('location.reload()',1300);
+                        setTimeout(function(){
+                           location.reload();
+                        },1300);
                      } else {
                         Swal.fire("Adding Plan Failed",'','error');
                      }
@@ -375,7 +377,9 @@
                         $('#plan_edit_modal').modal('hide');
                         Swal.fire("Plan updated succesfully",'','success');
                         // $('#daily_plan_table').DataTable().ajax.reload();
-                        setInterval('location.reload()',1300);
+                        setTimeout(function(){
+                           location.reload();
+                        },1300);
                      } else {
                         Swal.fire("Update Plan Failed",'','error');
                      }
@@ -400,7 +404,9 @@
                         } else {
                            Swal.fire("Plan data failed to delete",'','error');
                         }
-                        setInterval('location.reload()',1300);
+                        setTimeout(function(){
+                           location.reload();
+                        },1300);
                      }
                   });
                });

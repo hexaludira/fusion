@@ -26,6 +26,11 @@ class MC_main_dashboard extends CI_Controller {
     }
 
     public function load_main_dashboard_today(){
+        if (!$this->db->conn_id || !$this->db->simple_query('SELECT 1')) {
+            log_message('error', 'Database connection lost. Reconnecting...');
+            $this->db->reconnect();
+        }
+
         $data_plan = $this->main_model->get_total_plan_by_today();
         $data_actual = $this->main_model->get_actual_by_today();
         
