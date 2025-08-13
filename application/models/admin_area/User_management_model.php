@@ -36,4 +36,27 @@ class User_management_model extends CI_Model{
         return $delete_role;
     }
 
+    public function edit_role($id){
+        $this->db->where('role_id', $id);
+        $edit_role = $this->db->get('role_tbl')->result();
+        return $edit_role;
+    }
+
+    public function update_role($id, $data){
+        $this->db->where('role_id', $id);
+        return $this->db->update('role_tbl', $data);
+    }
+
+    public function insert_new_user($data){
+        $insert_user = $this->db->insert('user_tbl', $data);
+        return $insert_user;
+    }
+
+    public function reset_password($id, $data){
+        $this->db->where('user_id', $id);
+        $reset_password = $this->db->update('user_tbl',$data);
+
+        return $reset_password;
+    }
+
 }

@@ -40,6 +40,7 @@ class UserManagement extends CI_Controller {
         $data['sidebar_title'] = 'User Management';
         $data['sidebar'] = 'template/admin_sidebar';
         $data['content'] = 'admin_area/list_user';
+        $data['roles'] = $this->user_mgmt_model->get_all_role();
 
         $this->load->view('template/main', $data);
     }
@@ -50,7 +51,6 @@ class UserManagement extends CI_Controller {
         header('Content-Type: application/json');
         echo json_encode($data, JSON_PRETTY_PRINT);
     }
-
     public function list_user(){
         $data = $this->user_mgmt_model->get_all_user();
 
@@ -92,6 +92,67 @@ class UserManagement extends CI_Controller {
         $role_id_delete = $this->input->post('role_id_delete');
 
         $role_delete = $this->user_mgmt_model->delete_role($role_id_delete);
+
+        echo json_encode([
+            'success' => true
+        ]);
+    }
+
+    public function edit_role(){
+        $role_id_edit = $this->input->post('role_id_edit');
+
+        $role_edit = $this->user_mgmt_model->edit_role($role_id_edit);
+
+        echo json_encode($role_edit);
+    }
+
+    public function update_role(){
+        $data = $this->input->post();
+        $data_update = [
+            'role_name' => $data['role_name_edit'],
+            'role_desc' => $data['role_desc_edit']
+        ];
+
+        $update_role = $this->user_mgmt_model->update_role($data['role_id_edit'], $data_update);
+
+        echo json_encode([
+            'success' => true
+        ]);
+    }
+
+    public function add_new_user(){
+        $data = $this->input->post();
+        date_default_timezone_set('Asia/Jakarta');
+        $datetime_now = date('Y-m-d H:i:s');
+
+        $dataSave = $this->user_mgmt_model->insert_new_user([
+            'nik' => $data['user_nik_add'],
+            'name' => $data['user_name_add'],
+            'email' => $data['user_email_add'],
+            'password' => password_hash($data['user_password_add'], PASSWORD_DEFAULT),
+            'role_id' => $data['user_role_add'],
+            'created_date_time' => $datetime_now,
+            'created_by' => $this->session->userdata('user_id')
+        ]);
+
+        echo json_encode([
+            'success' => true
+        ]);
+    }
+
+    public function reset_password(){
+        $default_password = password_hash('fusion123', PASSWORD_DEFAULT);
+        $id = $this->input->post('user_id');
+        date_default_timezone_set('Asia/Jakarta');
+        $datetime_now = date('Y-m-d H:i:s');
+
+        $data = [
+            'password' => $default_password,
+            'updated_date_time' => $datetime_now,
+            'updated_by' => $this->session->userdata('user_id')
+        ];
+
+        $data_reset = $this->user_mgmt_model->reset_password($id,$data);
 
         echo json_encode([
             'success' => true

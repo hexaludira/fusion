@@ -87,7 +87,7 @@
 <!----------------------------- <END> Modal Add Role <END> ---------------------------->
 
 <!----------------------------- Modal Edit Role --------------------------------------->
-<div class="modal fade" id="role_add_modal" tabindex="-1">
+<div class="modal fade" id="role_edit_modal" tabindex="-1">
       <div class="modal-dialog modal-lg">
          <div class="modal-content">
             <div class="modal-header">
@@ -102,14 +102,15 @@
                      <div class="card-body">
                         <div id="roleInputWrapper">
                            <div class="form-group row">
+                              <input type="hidden" class="form-control" id="role_id_edit" name="role_id_edit">
                               <div class="col-sm-1">
                                  <label class="col-sm-3 col-form-label">Role</label>
                               </div>
                               <div class="col-sm-3">
-                                 <input type="text" class="form-control" name="role_name_edit" placeholder="Role Name" required>
+                                 <input type="text" class="form-control" name="role_name_edit" id="role_name_edit" placeholder="Role Name" required>
                               </div>
                               <div class="col-sm-5">
-                                 <input type="text" class="form-control" name="role_desc_edit" placeholder="Role Description" required>
+                                 <input type="text" class="form-control" name="role_desc_edit" id="role_desc_edit" placeholder="Role Description" required>
                               </div>
                            </div>
                         </div>
@@ -146,6 +147,46 @@
    </div>
 </div>
 <!--------------------------- <END> Modal Delete Role <END> ----------------------------->
+
+<!--------------------------- Modal Assign Access -------------------------------------->
+<div class="modal fade" id="role_edit_modal" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h4 class="modal-title">Set Access</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&Chi;</span>
+					</button>
+            </div>
+            <div class="modal-body">
+               <!-- Add form here -->
+                  <form class="form-horizontal" method="post" action="" id="set_access_form">
+                     <div class="card-body">
+                        <div id="roleInputWrapper">
+                           <div class="form-group row">
+                              <input type="hidden" class="form-control" id="role_id_edit" name="role_id_edit">
+                              <div class="col-sm-1">
+                                 <label class="col-sm-3 col-form-label">Role</label>
+                              </div>
+                              <div class="col-sm-3">
+                                 <input type="text" class="form-control" name="role_name_edit" id="role_name_edit" placeholder="Role Name" required>
+                              </div>
+                              <div class="col-sm-5">
+                                 <input type="text" class="form-control" name="role_desc_edit" id="role_desc_edit" placeholder="Role Description" required>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary float-right" id="btn_role_update">Update Role</button>
+                     </div>
+                </form>
+            </div>
+         </div>
+      </div>
+   </div>
+
+<!--------------------------- <END> Modal Assign System <END> ----------------------------->
 
 <script type="text/javascript">
     $(document).ready(function(){
@@ -187,7 +228,9 @@
                      {data: 'role_name'},
                      {data: 'role_desc'},
                      {data: 'role_id', render: function(data, type, row){
-                        return '<button class="btn btn-info btn-sm btn_edit me-2" data-id="' + data + '"><i class="fas fa-pencil-alt"></i> Edit</button> ' + '<button class="btn btn-danger btn-sm btn_delete" data-id="' + data + '"><i class="fas fa-trash-can"></i> Delete</button>';
+                        return '<button class="btn btn-info btn-sm btn_edit" data-id="' + data + '"><i class="fas fa-pencil-alt"></i> Edit</button> ' + 
+                        '<button class="btn btn-danger btn-sm btn_delete mx-2" data-id="' + data + '"><i class="fas fa-trash-can"></i> Delete</button>' + 
+                        '<button class="btn btn-success btn-sm btn_access" data-id="' + data + '"><i class="fas fa-key"></i> Set Access</button>';
                      }}
                   ]
                });
@@ -197,7 +240,7 @@
 
       /* ======================= <END>Show List Role Data<END> ========================= */
 
-      // Function for add new role field
+      // Function for add another role field
       $('#btn_another_role').on('click',function(){
          const newInput = `
             <div class="form-group row role-input-group">
@@ -281,10 +324,55 @@
       });
       // <END> Ajax for Delete Role <END>
 
-      // Ajax for edit role
+      // Ajax for Show Edit Role
+      $('#list_role_table').on('click','.btn_edit', function(e){
+         e.preventDefault();
+         let role_id = $(this).attr('data-id');
+         $.ajax({
+            url : '<?= base_url('admin_area/usermanagement/edit_role')?>',
+            type : 'POST',
+            data : {role_id_edit : role_id},
+            dataType : 'json',
+            success : function(response){
+               console.log(response);
+               $('#role_id_edit').val(response[0].role_id);
+               $('#role_name_edit').val(response[0].role_name);
+               $('#role_desc_edit').val(response[0].role_desc);
+               $('#role_edit_modal').modal('show');
+            }
+         });
+      });
+      // <END> Ajax for Show Edit Role <END>
 
+      // Ajax for Update Role
+      $('#btn_role_update').on('click',(function(e){
+         e.preventDefault();
+         var form_data = new FormData($('#edit_role_form')[0]);
 
-      // <END> Ajax for Edit Role <END>
-
+         $.ajax({
+            url : '<?= base_url('admin_area/usermanagement/update_role')?>',
+            type : 'POST',
+            dataType : 'json',
+            data : form_data,
+            contentType : false,
+            cache : false,
+            processData : false,
+            success : function(response){
+               if(response.success){
+                  console.log(response);
+                  $('#edit_role_form')[0].reset();
+                  $('#role_edit_modal').modal('hide');
+                  Swal.fire("Role updated succesfully",'','success');
+                  setTimeout(function(){
+                     location.reload();
+                  }, 1300);
+               } else {
+                  console.log(response);
+                  Swal.fire("Update Role failed",'','error');
+               }
+            }
+         });
+      }));
+      // <END> Ajax for Update Role <END>
     });
 </script>

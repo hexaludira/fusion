@@ -351,7 +351,8 @@
                      $('#plan_coloring_edit').val(response[0].coloring_plan_qty);
                      $('#plan_tubing_edit').val(response[0].tubing_plan_qty);
                      $('#plan_stranding_edit').val(response[0].stranding_plan_qty);
-                     $('#plan_sheathing_edit').val(response[0].sheathing_plan_qty);
+                     $('#plan_sheathing_ckm_edit').val(response[0].sheathing_plan_ckm_qty);
+                     $('#plan_sheathing_fkm_edit').val(response[0].sheathing_plan_fkm_qty);
                   }
                });
             })
