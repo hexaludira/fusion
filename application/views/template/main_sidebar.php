@@ -32,6 +32,12 @@
             PROFILE
         </li>
         <li class="nav-item">
+          <a href="<?= base_url('all_system/change_password') ?>" class="nav-link">
+            <i class="nav-icon fas fa-key"></i>
+            <p>Change Password</p>
+          </a>
+        </li>
+        <li class="nav-item">
           <a href="<?= base_url('auth/logout'); ?>" class="nav-link" onclick="return confirm('Do you really wanna to sign out ?')">
             <i class="nav-icon fas fa-sign-out-alt"></i>
             <p>Sign Out</p>
@@ -39,7 +45,7 @@
         </li>
         <li class="nav-item">
           <a href="<?= base_url('all_system/show_about'); ?>" class="nav-link">
-            <i class="nav-icon fas fa-sign-out-alt"></i>
+            <i class="nav-icon fas fa-circle-info"></i>
             <p>About</p>
           </a>
         </li>

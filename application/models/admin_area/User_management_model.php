@@ -59,4 +59,17 @@ class User_management_model extends CI_Model{
         return $reset_password;
     }
 
+    public function get_all_systems(){
+        return $this->db->get('user_systems')->result();
+    }
+
+    public function get_menus_per_systems($system){
+        $menus = [];
+        foreach ($system as $sys){
+            $this->db->where('system_id', $sys->id);
+            $menus[$sys->id] = $this->db->get('user_menu')->result();
+        }
+        return $menus;
+    }
+
 }

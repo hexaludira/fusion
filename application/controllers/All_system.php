@@ -74,10 +74,42 @@ class All_system extends CI_Controller {
         $data['title'] = 'About';
         $data['sidebar'] = 'template/main_sidebar';
         $data['content'] = 'about';
+        $role = $this->session->userdata('role_name');
+        $data['role'] = $role;
         $this->load->view('template/main', $data);
     }
 
     public function back_allsystem(){
         $this->index();
+    }
+
+    public function change_password(){
+        $data['title'] = 'All System - Change Password';
+        $data['sidebar'] = 'template/main_sidebar';
+        $data['sidebar_title'] = 'User Management';
+        $data['content'] = 'change_password';
+        $role = $this->session->userdata('role_name');
+        $data['role'] = $role;
+
+        $this->load->view('template/main', $data);
+    }
+
+    public function save_new_password(){
+        $user_id = $this->input->post('user_id');
+        $new_password = password_hash($this->input->post('new_password'), PASSWORD_DEFAULT);
+        date_default_timezone_set('Asia/Jakarta');
+        $datetime_now = date('Y-m-d H:i:s');
+
+        $data = [
+            'password' => $new_password,
+            'updated_date_time' => $datetime_now,
+            'updated_by' => $this->session->userdata('user_id')
+        ];
+
+        $save_password = $this->system_model->change_password($user_id,$data);
+
+        echo json_encode([
+            'success' => true
+        ]);
     }
 }

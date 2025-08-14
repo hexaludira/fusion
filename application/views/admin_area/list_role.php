@@ -149,7 +149,7 @@
 <!--------------------------- <END> Modal Delete Role <END> ----------------------------->
 
 <!--------------------------- Modal Assign Access -------------------------------------->
-<div class="modal fade" id="role_edit_modal" tabindex="-1">
+<div class="modal fade" id="modalSetAccess" tabindex="-1">
       <div class="modal-dialog modal-lg">
          <div class="modal-content">
             <div class="modal-header">
@@ -158,35 +158,31 @@
 						<span aria-hidden="true">&Chi;</span>
 					</button>
             </div>
-            <div class="modal-body">
-               <!-- Add form here -->
-                  <form class="form-horizontal" method="post" action="" id="set_access_form">
-                     <div class="card-body">
-                        <div id="roleInputWrapper">
-                           <div class="form-group row">
-                              <input type="hidden" class="form-control" id="role_id_edit" name="role_id_edit">
-                              <div class="col-sm-1">
-                                 <label class="col-sm-3 col-form-label">Role</label>
-                              </div>
-                              <div class="col-sm-3">
-                                 <input type="text" class="form-control" name="role_name_edit" id="role_name_edit" placeholder="Role Name" required>
-                              </div>
-                              <div class="col-sm-5">
-                                 <input type="text" class="form-control" name="role_desc_edit" id="role_desc_edit" placeholder="Role Description" required>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary float-right" id="btn_role_update">Update Role</button>
-                     </div>
-                </form>
-            </div>
+            <form id="formSetAccess" method="post" role-id="">
+               <input type="hidden" name="role_id" id="role_id">
+               <div class="modal-body" id="access-content">
+                  <table class="table table-bordered">
+                     <thead>
+                        <tr>
+                           <th style="width: 40%">System</th>
+                           <th>Menu</th>
+                        </tr>
+                     </thead>
+                     <tbody id="accessTable">
+                        <!-- Isi dari AJAX -->
+                     </tbody>
+                  </table>    
+               </div>
+               <div class="modal-footer">
+                  <input type="hidden" name="role_id" id="role_id">
+                  <button type="button" class="btn btn-primary" id="btnSaveAccess">Save</button>
+               </div>
+            </form>
          </div>
       </div>
    </div>
 
-<!--------------------------- <END> Modal Assign System <END> ----------------------------->
+<!--------------------------- <END> Modal Assign Access <END> ----------------------------->
 
 <script type="text/javascript">
     $(document).ready(function(){
@@ -374,5 +370,88 @@
          });
       }));
       // <END> Ajax for Update Role <END>
+
+      // Ajax for Showing Access Modal
+      $('#list_role_table').on('click','.btn_access', function(){
+         let roleId = $(this).attr('data-id');
+         $('#formSetAccess').attr('role-id', roleId);
+         $('#role_id').val(roleId);
+         console.log("Role ID:", roleId);
+         // $('#modalSetAccess').modal('show');
+         $.ajax({
+            url: '<?= base_url('admin_area/usermanagement/get_role_access')?>',
+            type: 'POST',
+            data: { role_id: roleId },
+            dataType: 'json',
+            success: function(res){
+               $('#accessTable').empty(); // hapus isi lama
+
+               $.each(res.systems, function(i, sys){
+                     // buat baris system
+                     let menusHtml = '';
+                     $.each(sys.menus, function(j, menu){
+                        menusHtml += `
+                           <div class="form-check">
+                                 <input type="checkbox" class="form-check-input" name="menu[]" value="${menu.id}" ${menu.checked ? 'checked' : ''}>
+                                 <label class="form-check-label">${menu.name}</label>
+                           </div>
+                        `;
+                     });
+
+                     $('#accessTable').append(`
+                        <tr>
+                           <td>
+                                 <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" name="system[]" value="${sys.id}" ${sys.checked ? 'checked' : ''}>
+                                    <label class="form-check-label">${sys.name}</label>
+                                 </div>
+                           </td>
+                           <td>${menusHtml}</td>
+                        </tr>
+                     `);
+               });
+               $('#modalSetAccess').modal('show');
+            }
+         });
+      }); // Show Access modal <END>
+
+      // Save selected access to Database
+      $('#btnSaveAccess').on('click', function(e){
+         e.preventDefault();
+
+         let roleId = $('#formSetAccess').attr('role-id');
+         let systems = [];
+         let menus = [];
+
+         // Get all checked system
+         $('input[name="system[]"]:checked').each(function() {
+            systems.push($(this).val());
+         });
+
+         // Get all checked menu
+         $('input[name="menu[]"]:checked').each(function() {
+            menus.push($(this).val());
+         });
+
+         $.ajax({
+            url : '<?= base_url('admin_area/usermanagement/save_role_access')?>',
+            type : 'POST',
+            dataType : 'json',
+            data : {
+               role_id : roleId,
+               systems : systems,
+               menus : menus
+            },
+            success : function(response){
+               if (response.status === 'success'){
+                  Swal.fire('Role Access Saved Succesfully','','success');
+                  $('#modalSetAccess').modal('hide');
+               } else {
+                  Swal.fire("Role Access Not Saved",'','error');
+               }
+            }
+         });
+      }); // Save Selectec access to Database <END>
+
     });
 </script>

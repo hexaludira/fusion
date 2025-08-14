@@ -158,4 +158,84 @@ class UserManagement extends CI_Controller {
             'success' => true
         ]);
     }
+
+    public function get_role_access(){
+        $role_id = $this->input->post('role_id');
+
+        $systems = $this->db->get('user_systems')->result();
+
+        $result = [];
+
+        foreach($systems as $sys) {
+            //Get all menu in this system
+            $this->db->where('system_id', $sys->system_id);
+            $this->db->order_by('sort', 'ASC');
+            $menus = $this->db->get('user_menu')->result();
+
+            $menu_list = [];
+            foreach($menus as $menu){
+                // Check if the menu already assigned to role
+                $is_checked = $this->db
+                    ->where('role_id', $role_id)
+                    ->where('menu_id', $menu->id)
+                    ->count_all_results('role_access_menu') > 0;
+
+                $menu_list[] = [
+                    'id' => $menu->id,
+                    'name' => $menu->menu_name,
+                    'checked' => $is_checked
+                ];
+            }
+
+            // Cek apakah system ini minimal 1 menu sudah dipilih
+            $sys_checked = $this->check_system_checked($role_id, $sys->system_id);
+
+            $result[] = [
+                'id'     => $sys->system_id,
+                'name'   => $sys->system_name,
+                'checked'=> $sys_checked,
+                'menus'  => $menu_list
+            ];
+        }
+
+        echo json_encode(['systems' => $result]);
+    }
+
+    private function check_system_checked($role_id, $system_id){
+        return $this->db
+            ->join('user_menu', 'user_menu.id = role_access_menu.menu_id', 'inner')
+            ->where('user_menu.system_id', $system_id)
+            ->where('role_access_menu.role_id', $role_id)
+            ->count_all_results('role_access_menu') > 0;
+    }
+
+    public function save_role_access(){
+        $role_id = $this->input->post('role_id');
+        $systems = $this->input->post('systems');
+        $menus = $this->input->post('menus');
+
+        $systems = is_array($systems) ? $systems : [];
+        $menus = is_array($menus) ? $menus : [];
+
+        $this->db->where('role_id', $role_id)->delete('role_access_system');
+        $this->db->where('role_id', $role_id)->delete('role_access_menu');
+
+        // insert system access
+        foreach($systems as $sys_id){
+            $this->db->insert('role_access_system',[
+                'role_id' => $role_id,
+                'system_id' => $sys_id
+            ]);
+        }
+
+        // insert menu access
+        foreach($menus as $menu_id){
+            $this->db->insert('role_access_menu',[
+                'role_id' => $role_id,
+                'menu_id' => $menu_id
+            ]);
+        }
+
+        echo json_encode(['status' => 'success']);
+    }
 }

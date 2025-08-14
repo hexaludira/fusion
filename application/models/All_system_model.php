@@ -19,5 +19,10 @@ class All_system_model extends CI_Model{
         return $this->db->get('user_systems')->result();
     }
 
-    
+    public function change_password($id, $data){
+        $this->db->where('user_id', $id);
+        $change_password = $this->db->update('user_tbl',$data);
+
+        return $change_password;
+    }
 }

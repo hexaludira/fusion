@@ -280,5 +280,7 @@
          });
       });
       // <END> Ajax for Add user
+
+      // Ajax for reset user password
     });
 </script>
