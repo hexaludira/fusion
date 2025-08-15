@@ -15,8 +15,13 @@
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
         <?php foreach ($menus as $menu): ?>
           <?php if (empty($menu->submenus)): ?>
+            <?php $current_url = trim(uri_string(), '/');
+                  $submenu_url = trim($menu->url, '/');
+                  $current_url = preg_replace('#^fusion/#', '', $current_url);
+                  $is_active = (strpos($current_url, $submenu_url) === 0);
+            ?>
             <li class="nav-item">
-              <a href="<?= base_url($menu->url) ?>" class="nav-link">
+              <a href="<?= base_url($menu->url) ?>" class="nav-link <?= $is_active ? 'active' : '' ?>">
                 <i class="nav-icon fas <?= $menu->icon ?>"></i>
                 <p><?= $menu->menu_name ?></p>
               </a>
@@ -33,7 +38,7 @@
               <ul class="nav nav-treeview">
                 <?php foreach ($menu->submenus as $sub): ?>
                   <li class="nav-item">
-                    <a href="<?= base_url($sub->url) ?>" class="nav-link">
+                    <a href="<?= base_url($sub->url) ?>" class="nav-link <?= $is_active ? 'active' : '' ?>">
                       <i class="far fa-circle nav-icon"></i>
                       <p><?= $sub->title ?></p>
                     </a>

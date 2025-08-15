@@ -32,6 +32,12 @@
             <p>User Management</p>
           </a>
         </li>
+        <li class="nav-item">
+          <a href="<?= base_url('admin_area/usermanagement/system_management_menu');?>" class="nav-link <?= ($this->uri->segment(3) == 'system_management_menu' && $this->uri->segment(4) == '') ? 'active' : '' ?>">
+            <i class="nav-icon fa-solid fa-bars"></i>
+            <p>System Management</p>
+          </a>
+        </li>
         <li class="nav-header ">
             PROFILE
         </li>

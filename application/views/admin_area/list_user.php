@@ -137,11 +137,12 @@
                         </div>
                         <div id="roleInputWrapper">
                            <div class="form-group row">
+                              <input type="hidden" class="form-control" id="user_id_edit" name="user_id_edit">
                               <div class="col-sm-4">
                                  <label class="col-form-label">NIK (Employee Number)</label>
                               </div>
                               <div class="col-sm-3">
-                                 <input type="number" class="form-control" name="user_nik_edit" placeholder="Ex: 22030001" required>
+                                 <input type="number" class="form-control" name="user_nik_edit" id="user_nik_edit" placeholder="Ex: 22030001" required>
                               </div>
                            </div>
                            <div class="form-group row">
@@ -149,7 +150,7 @@
                                  <label class="col-form-label">Employee Name</label>
                               </div>
                               <div class="col-sm-5">
-                                 <input type="text" class="form-control" name="user_name_edit" placeholder="Ex: Hartono" required>
+                                 <input type="text" class="form-control" name="user_name_edit" id="user_name_edit" placeholder="Ex: Hartono" required>
                               </div>
                            </div>
                            <div class="form-group row">
@@ -157,15 +158,7 @@
                                  <label class="col-form-label">Employee Email</label>
                               </div>
                               <div class="col-sm-5">
-                                 <input type="email" class="form-control" name="user_email_edit" placeholder="Ex: hartono@mbgfiber.com" required>
-                              </div>
-                           </div>
-                           <div class="form-group row">
-                              <div class="col-sm-4">
-                                 <label class="col-form-label">Password</label>
-                              </div>
-                              <div class="col-sm-5">
-                                 <input type="text" class="form-control" name="user_password_edit" placeholder="fusion123" disabled>
+                                 <input type="email" class="form-control" name="user_email_edit" id="user_email_edit" placeholder="Ex: hartono@mbgfiber.com" required>
                               </div>
                            </div>
                            <div class="form-group row">
@@ -173,7 +166,7 @@
                                  <label class="col-form-label">Role</label>
                               </div>
                               <div class="col-sm-5">
-                                 <select name="user_role_add" id="user_role_add" class="form-control">
+                                 <select name="user_role_edit" id="user_role_edit" class="form-control">
                                  <option></option>
                                  <?php foreach ($roles as $role) :?>
                                     <option value="<?= $role->role_id?>"><?= $role->role_name ?></option>
@@ -184,7 +177,7 @@
                         </div>
                      </div>
                      <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary float-right" id="btn_user_add">Add User</button>
+                        <button type="submit" class="btn btn-primary float-right" id="btn_user_update">Update User</button>
                      </div>
                 </form>
             </div>
@@ -192,9 +185,54 @@
       </div>
    </div>
   <!----------------------------- <END> Modal Edit User <END> ----------------------------->
-	
 
+   <!--------------------------- Modal Delete User -------------------------------------->
+   <div class="modal fade" id="user_delete_modal" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h4 class="modal-title">Delete User</h4>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+            <h4>Are you sure you want to delete this User?</h4><br/>
+            <h5 style="color: red;">If you delete this user, corresponding user will lose access. This cannot be undone.</h5>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-danger" id="btn_confirm_delete">Delete</button>
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!--------------------------- <END> Modal Delete Role <END> ----------------------------->
+  
+   <!----------------------- Modal Reset Password -------------------------------------->
+  <div class="modal fade" id="reset_password_modal" tabindex="-1">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Reset Password</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+          <h4>Are you sure you want to Reset the user password?</h4>
+				</div>
+				<div class="modal-footer">
+               <button type="button" class="btn btn-warning" id="btn_confirm_reset"><b>Yes, Reset</b></button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
+  <!----------------------- <END>Modal Reset Password <END>---------------------------->
+	
 </div>
+
 <script type="text/javascript">
     $(document).ready(function(){
 
@@ -202,6 +240,12 @@
 
       $('#user_role_add').select2({
         dropdownParent : $("#user_add_modal .modal-content"),
+        theme: 'bootstrap4',
+        placeholder: "--Select Role--",
+      });
+
+      $('#user_role_edit').select2({
+        dropdownParent : $("#user_edit_modal .modal-content"),
         theme: 'bootstrap4',
         placeholder: "--Select Role--",
       });
@@ -251,7 +295,7 @@
       }
       /* ======================= <END>Show List User Data<END> ========================= */
 
-      // Ajax for submit new user
+      // Submit new user
       $('#btn_user_add').on('click', function(e){
          e.preventDefault();
          let form_data = new FormData($('#add_user_form')[0]);
@@ -279,8 +323,111 @@
             }
          });
       });
-      // <END> Ajax for Add user
+      // Submit new user <END>
 
-      // Ajax for reset user password
+      // Show Edit user modal
+      $('#list_user_table').on('click','.btn_edit', function(e){
+         e.preventDefault();
+         let user_id = $(this).attr('data-id');
+         $.ajax({
+            url : '<?= base_url('admin_area/usermanagement/edit_user')?>',
+            type : 'POST',
+            data : {user_id : user_id},
+            dataType : 'json',
+            success : function(response){
+               console.log(response);
+               $('#user_id_edit').val(response[0].user_id);
+               $('#user_nik_edit').val(response[0].nik);
+               $('#user_name_edit').val(response[0].name);
+               $('#user_email_edit').val(response[0].email);
+               $('#user_role_edit').val(response[0].role_id).trigger('change');
+               $('#user_edit_modal').modal('show');
+            }
+         });
+      });
+      // Show Edit user modal <END>
+
+      // Update User
+      $('#btn_user_update').on('click', function(e){
+         e.preventDefault();
+         let form_data = new FormData($('#edit_user_form')[0]);
+
+         $.ajax({
+            url : '<?= base_url('admin_area/usermanagement/update_user')?>',
+            type : 'POST',
+            dataType : 'json',
+            data : form_data,
+            contentType : false,
+            cache : false,
+            processData : false,
+            success : function(response){
+               if(response.success){
+                  console.log(response);
+                  $('#edit_user_form')[0].reset();
+                  $('#user_edit_modal').modal('hide');
+                  Swal.fire("User updated successfully",'','success');
+                  setTimeout(function(){
+                     setTimeout(function(){
+                        location.reload();
+                     })
+                  }, 1300);
+               } else {
+                  console.log(response);
+                  Swal.fire("Update user failed",'','error');
+               }
+            }
+         });
+      });
+      // Update User <END>
+
+      // Delete User
+      $('#list_user_table').on('click', '.btn_delete', function(e){
+         let user_id = $(this).attr('data-id');
+         $('#user_delete_modal').modal('show');
+         $('#btn_confirm_delete').on('click', function(){
+            $.ajax({
+               url : '<?= base_url('admin_area/usermanagement/delete_user')?>',
+               type : 'POST',
+               dataType : 'json',
+               data : {user_id_delete : user_id},
+               success : function(response){
+                  $('#user_delete_modal').modal('hide');
+                  if(response.success){
+                     Swal.fire("User has been deleted",'','success');
+                  } else {
+                     Swal.fire("User failed to delete",'','error');
+                  }
+                  setTimeout(function(){
+                     location.reload();
+                  }, 1300);
+               }
+            });
+         });
+      });
+      // Delete User <END>
+
+      // Reset user password
+      $('#list_user_table').on('click','.btn_reset_password',function(e){
+         let user_id = $(this).attr('data-id');
+         $('#reset_password_modal').modal('show');
+         $('#btn_confirm_reset').on('click', function(){
+            $.ajax({
+               url : '<?= base_url('admin_area/usermanagement/reset_password')?>',
+               type : 'POST',
+               dataType : 'json',
+               data : {user_id : user_id},
+               success : function(response){
+                  console.log('RESPONSE:', response);
+                  $('#reset_password_modal').modal('hide');
+                  if(response.success === true){
+                     Swal.fire('User password has been resetted','','success');
+                  } else {
+                     Swal.fire('Reset password failed','','error');
+                  }
+               }
+            });
+         });
+      });
+      //Reset password user <END>
     });
 </script>

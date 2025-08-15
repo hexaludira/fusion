@@ -45,6 +45,16 @@ class UserManagement extends CI_Controller {
         $this->load->view('template/main', $data);
     }
 
+    public function system_management_menu(){
+        $data['title'] = 'FUSION-System Management';
+        $data['sidebar_title'] = 'System Management';
+        $data['sidebar'] = 'template/admin_sidebar';
+        $data['content'] = 'admin_area/list_system';
+        $data['system'] = $this->user_mgmt_model->get_all_system();
+
+        $this->load->view('template/main', $data);
+    }
+
     public function list_role(){
         $data = $this->user_mgmt_model->get_all_role();
 
@@ -53,6 +63,13 @@ class UserManagement extends CI_Controller {
     }
     public function list_user(){
         $data = $this->user_mgmt_model->get_all_user();
+
+        header('Content-Type: application/json');
+        echo json_encode($data, JSON_PRETTY_PRINT);
+    }
+
+    public function list_system(){
+        $data = $this->user_mgmt_model->get_all_system();
 
         header('Content-Type: application/json');
         echo json_encode($data, JSON_PRETTY_PRINT);
@@ -134,6 +151,46 @@ class UserManagement extends CI_Controller {
             'created_date_time' => $datetime_now,
             'created_by' => $this->session->userdata('user_id')
         ]);
+
+        echo json_encode([
+            'success' => true
+        ]);
+    }
+
+    public function edit_user(){
+        $user_id_edit = $this->input->post('user_id');
+
+        $user_edit = $this->user_mgmt_model->edit_user($user_id_edit);
+
+        echo json_encode($user_edit);
+    }
+
+    public function update_user(){
+        $data = $this->input->post();
+        date_default_timezone_set('Asia/Jakarta');
+        $datetime_now = date('Y-m-d H:i:s');
+
+        $data_update = [
+            'nik' => $data['user_nik_edit'],
+            'name' => $data['user_name_edit'],
+            'email' => $data['user_email_edit'],
+            'role_id' => $data['user_role_edit'],
+            'updated_date_time' => $datetime_now,
+            'updated_by' => $this->session->userdata('user_id')
+        ];
+
+        $update_user = $this->user_mgmt_model->update_user($data['user_id_edit'], $data_update);
+
+        echo json_encode([
+            'success' => true
+        ]);
+    }
+
+    public function delete_user(){
+        header('Content-Type: application/json');
+        $user_id_delete = $this->input->post('user_id_delete');
+
+        $user_delete = $this->user_mgmt_model->delete_user($user_id_delete);
 
         echo json_encode([
             'success' => true
