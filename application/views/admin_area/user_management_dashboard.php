@@ -4,7 +4,7 @@
     <div class="col-lg-3 col-6">
       <div class="small-box bg-info">
         <div class="inner">
-          <h3 class="fs-6 fw-bold text-wrap">Total Role: <?= $total_user?></h3><br/>
+          <h3 class="fs-6 fw-bold text-wrap">Total Role: <?= $total_role?></h3><br/>
         </div>
         <div class="icon"><i class="nav-icon fa-solid fa-user-gear"></i>
         </div>

@@ -169,7 +169,7 @@
 
 		loadDashboard(today);
 
-		// Get data for Cable KM and Fiber KM card by today
+		// Get data for Cable KM and Fiber KM card by tab
 		function loadDashboard(tab){
 			let container = $('#' + tab + '_tab');
 
@@ -224,7 +224,18 @@
 				}
 			}); // ajax
 		}
-
+      // Get data for Cable KM and Fiber KM card by tab <END>
+      
+      // Function for convert data to string
+      function toNumber(value){
+         if (value == null) {
+            return 0;
+         } else {
+            return parseFloat(String(value).replace(/,/g, '')) || 0;
+         }
+      }
+      // Function for convert data to string <END>
+      
       // Function for rendering chart
       function renderChartFor(tab, plan_ckm, actual_ckm, plan_fkm, actual_fkm){
          const options_ckm = {
@@ -247,7 +258,8 @@
             colors: ['#ffd449', '#4361ee'],
             series: [{
                name: 'CKM',
-               data: [parseFloat(plan_ckm.replace(/,/g,'')), parseFloat(actual_ckm.replace(/,/g,''))]
+            //    data: [parseFloat(plan_ckm.replace(/,/g,'')), parseFloat(actual_ckm.replace(/,/g,''))]
+			   data: [toNumber(plan_ckm), toNumber(actual_ckm)]
             }],
             xaxis: {
                categories: ['Plan', 'Actual']
@@ -264,7 +276,7 @@
             dataLabels: {
                enabled: true,
                formatter: function (val){
-                  return val + " Km";
+                  return val.toLocaleString() + " Km";
                },
                offsetY: -20,
                style: {
@@ -287,7 +299,8 @@
             colors: ['#48cae4','#2a9d8f'],
             series: [{
                name: 'FKM',
-               data: [parseFloat(plan_fkm.replace(/,/g,'')), parseFloat(actual_fkm.replace(/,/g,''))]
+            //    data: [parseFloat(plan_fkm.replace(/,/g,'')), parseFloat(actual_fkm.replace(/,/g,''))]
+			   data: [toNumber(plan_fkm), toNumber(actual_fkm)]
             }],
             xaxis: {
                categories: ['Plan', 'Actual']
@@ -304,7 +317,7 @@
             dataLabels: {
                enabled: true,
                formatter: function (val){
-                  return val + " Km";
+                  return val.toLocaleString() + " Km";
                },
                offsetY: -20,
                style: {

@@ -15,6 +15,7 @@ class UserManagement extends CI_Controller {
 
     public function index(){
         $total_user = $this->user_mgmt_model->get_total_user();
+        $total_role = $this->user_mgmt_model->get_total_role();
 
         $data['title'] = 'FUSION-Admin Panel';
         $data['sidebar_title'] = 'Admin Panel';
@@ -22,6 +23,7 @@ class UserManagement extends CI_Controller {
         $data['content'] = 'admin_area/user_management_dashboard';
         // $data['menus'] = $this->Menu_model->getMenuWithSub($this->session->userdata('role_id'));
         $data['total_user'] = $total_user;
+        $data['total_role'] = $total_role;
 
         $this->load->view('template/main', $data);
     }
