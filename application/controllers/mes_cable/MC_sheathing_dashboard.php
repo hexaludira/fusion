@@ -45,10 +45,10 @@ class MC_sheathing_dashboard extends CI_Controller {
         echo json_encode([
             "plan_ckm"=> $plan_ckm,
             "actual_total_ckm" => $actual_total_ckm,
-            "percentage_ckm" => round(($actual_total_ckm / $plan_ckm) * 100,1),
+            // "percentage_ckm" => round(($actual_total_ckm / $plan_ckm) * 100,1),
             "plan_fkm" => $plan_fkm,
             "actual_total_fkm" => $actual_total_fkm,
-            "percentage_fkm" => round(($actual_total_fkm / $plan_fkm) * 100,1),
+            //  "percentage_fkm" => round(($actual_total_fkm / $plan_fkm) * 100,1),
         ]);
     }
 

@@ -1,5 +1,5 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-  <a href="<?= base_url('dashboard') ?>" class="brand-link">
+  <a href="<?= base_url('mes_cable/mc_main_dashboard') ?>" class="brand-link">
     <span class="brand-text font-weight-bold"><?= $sidebar_title;?></span>
   </a>
   <div class="sidebar">

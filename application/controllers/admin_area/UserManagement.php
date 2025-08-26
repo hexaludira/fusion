@@ -70,13 +70,6 @@ class UserManagement extends CI_Controller {
         echo json_encode($data, JSON_PRETTY_PRINT);
     }
 
-    public function list_system(){
-        $data = $this->user_mgmt_model->get_all_system();
-
-        header('Content-Type: application/json');
-        echo json_encode($data, JSON_PRETTY_PRINT);
-    }
-
     public function add_new_role(){
         $role_names = $this->input->post('role_name_add');
         $role_descs = $this->input->post('role_desc_add');

@@ -188,9 +188,21 @@
                end_date : endDate
             },
             success: function(response) {
-               $('#plan_ckm').text(response.plan);
-               $('#actual_ckm').text(response.actual_total);
-               $('#percent_ckm').text(response.percentage + '%');
+               let plan = response.plan;
+               let actual = response.actual_total;
+               let percentage = 0;
+               if(plan != null){
+                  percentage = ((actual / plan) * 100).toFixed(1);
+               } else {
+                  Swal.fire({
+                     title: "Warning",
+                     text: 'Plan data is empty',
+                     icon: "warning"
+                  });
+               }
+               $('#plan_ckm').text(plan);
+               $('#actual_ckm').text(actual);
+               $('#percent_ckm').text(percentage + ' %');
             },
             error: function(){
                Swal.fire({

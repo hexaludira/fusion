@@ -9,7 +9,7 @@
           </div>
           <div class="icon">
             <i class="nav-icon fas">
-              <img src="<?= base_url('assets/dist/img/' . $box['img']) ?>" alt="<?= $box['img']?>" style="width:50px;height:25px;">
+              <img src="<?= base_url('assets/img/' . $box['img']) ?>" alt="<?= $box['img']?>" style="width:90px;">
             </i>
           </div>
           <a href="<?= $box['url'] ?>" class="small-box-footer">

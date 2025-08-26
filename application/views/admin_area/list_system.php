@@ -24,7 +24,10 @@
                                 <th class="text-center">No</th>
                                 <th class="text-center">System Code</th>
                                 <th class="text-center">System Name</th>
-                                <th class="text-center">Role Description</th>
+                                <th class="text-center">System Description</th>
+                                <th class="text-center">URL</th>
+                                <th class="text-center">Color</th>
+                                <th class="text-center">Icon</th>
                                 <th class="text-center">Action</th>
                             </tr>
                            </thead>
@@ -42,49 +45,84 @@
    </div>
 </div> <!-- .container-fluid -->
 
-<!----------------------------- Modal Add Role --------------------------------------->
-<div class="modal fade" id="role_add_modal" tabindex="-1">
+<!----------------------------- Modal Add System --------------------------------------->
+<div class="modal fade" id="system_add_modal" tabindex="-1">
       <div class="modal-dialog modal-lg">
          <div class="modal-content">
             <div class="modal-header">
-               <h4 class="modal-title">Add New Role</h4>
+               <h4 class="modal-title">Add New System</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&Chi;</span>
 					</button>
             </div>
             <div class="modal-body">
                <!-- Add form here -->
-                  <form class="form-horizontal" method="post" action="" id="add_role_form">
+                  <form class="form-horizontal" method="post" action="" id="add_system_form" enctype="multipart/form-data">
                      <div class="card-body">
                         <div class="form-group row">
-                           <i><h6>*Please input the role name and description</h6></i>
+                           <i><h6>*Please input the new system</h6></i>
                         </div>
                         <div id="roleInputWrapper">
                            <div class="form-group row">
-                              <div class="col-sm-1">
-                                 <label class="col-sm-3 col-form-label">Role</label>
-                              </div>
                               <div class="col-sm-3">
-                                 <input type="text" class="form-control" name="role_name_add[]" placeholder="Role Name" required>
+                                 <label class="col-form-label">System Code</label>
                               </div>
                               <div class="col-sm-5">
-                                 <input type="text" class="form-control" name="role_desc_add[]" placeholder="Role Description" required>
+                                 <input type="text" class="form-control" name="system_code_add" placeholder="Ex: mes_cable" required>
                               </div>
+                           </div>
+                           <div class="form-group row">
                               <div class="col-sm-3">
-                                 <button type="button" class="btn btn-secondary" id="btn_another_role">Add another field</button>
+                                 <label class="col-form-label">System Name</label>
+                              </div>
+                              <div class="col-sm-5">
+                                 <input type="text" class="form-control" name="system_name_add" placeholder="Ex: MES Cable" required>
+                              </div>
+                           </div>
+                           <div class="form-group row">
+                              <div class="col-sm-3">
+                                 <label class="col-form-label">System Description</label>
+                              </div>
+                              <div class="col-sm-5">
+                                 <input type="text" class="form-control" name="system_desc_add" placeholder="Ex: Dashboard & Report">
+                              </div>
+                           </div>
+                           <div class="form-group row">
+                              <div class="col-sm-3">
+                                 <label class="col-form-label">System URL</label>
+                              </div>
+                              <div class="col-sm-5">
+                                 <input type="text" class="form-control" name="system_url_add" placeholder="Ex: mes_cable/mc_main_dashboard" required>
+                              </div>
+                           </div>
+                           <div class="form-group row">
+                              <div class="col-sm-3">
+                                 <label class="col-form-label">System Color</label>
+                              </div>
+                              <div class="col-sm-5">
+                                 <input type="text" class="form-control" name="system_color_add" placeholder="Ex: bg-danger" required>
+                              </div>
+                           </div>
+                           <div class="form-group row">
+                              <div class="col-sm-3">
+                                 <label class="col-form-label">System Icon</label>
+                              </div>
+                              <div class="col-sm-5">
+                                 <input type="file" class="form-control" name="system_icon_add" required>
+                                 <div id="preview"></div>
                               </div>
                            </div>
                         </div>
                      </div>
                      <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary float-right" id="btn_role_add">Add Role</button>
+                        <button type="submit" class="btn btn-primary float-right" id="btn_system_add">Add Role</button>
                      </div>
                 </form>
             </div>
          </div>
       </div>
    </div>
-<!----------------------------- <END> Modal Add Role <END> ---------------------------->
+<!----------------------------- <END> Modal Add System <END> ---------------------------->
 
 <!----------------------------- Modal Edit Role --------------------------------------->
 <div class="modal fade" id="role_edit_modal" tabindex="-1">
@@ -187,21 +225,21 @@
 <script type="text/javascript">
     $(document).ready(function(){
 
-      show_list_role();
+      show_list_system();
 
-      /* ======================= Show List Role Data ========================= */
-      function show_list_role(){
+      /* ======================= Show List System Data ========================= */
+      function show_list_system(){
          $.ajax({
-            url : '<?= base_url('admin_area/usermanagement/list_role')?>',
+            url : '<?= base_url('admin_area/systemmanagement/list_system')?>',
             type : 'POST',
             dataType : 'json',
             success: function(response){
                console.log(response);
-               if ($.fn.DataTable.isDataTable('#list_role_table')) {
-                     $('#list_role_table').DataTable().clear().destroy();
+               if ($.fn.DataTable.isDataTable('#list_system_table')) {
+                     $('#list_system_table').DataTable().clear().destroy();
                }
 
-               $('#list_role_table').DataTable({
+               $('#list_system_table').DataTable({
                   dom:
                   "<'row'<'col-md-6'B><'col-md-6'f>>" +
                   "<'row'<'col-12'tr>>" +
@@ -220,13 +258,21 @@
                      {data: null, render: function(data, type, row, meta){
                         return meta.row + 1;
                      }},
-                     {data: 'role_id'},
-                     {data: 'role_name'},
-                     {data: 'role_desc'},
-                     {data: 'role_id', render: function(data, type, row){
+                     {data: 'system_code'},
+                     {data: 'system_name'},
+                     {data: 'system_desc'},
+                     {data: 'url'},
+                     {data: 'color'},
+                     {data: 'icon', render: function(data, type, row){
+                        if(data){
+                           return '<img src="<?= base_url("assets/img/")?>' + data + '" alt="icon" width="70">';
+                        } else {
+                           return '<?= "no_picture"?>';
+                        }
+                     }},
+                     {data: 'system_id', render: function(data, type, row){
                         return '<button class="btn btn-info btn-sm btn_edit" data-id="' + data + '"><i class="fas fa-pencil-alt"></i> Edit</button> ' + 
-                        '<button class="btn btn-danger btn-sm btn_delete mx-2" data-id="' + data + '"><i class="fas fa-trash-can"></i> Delete</button>' + 
-                        '<button class="btn btn-success btn-sm btn_access" data-id="' + data + '"><i class="fas fa-key"></i> Set Access</button>';
+                        '<button class="btn btn-danger btn-sm btn_delete m-1" data-id="' + data + '"><i class="fas fa-trash-can"></i> Delete</button>'
                      }}
                   ]
                });
@@ -234,66 +280,36 @@
          });
       }
 
-      /* ======================= <END>Show List Role Data<END> ========================= */
+      /* ======================= <END>Show List System Data<END> ========================= */
 
-      // Function for add another role field
-      $('#btn_another_role').on('click',function(){
-         const newInput = `
-            <div class="form-group row role-input-group">
-               <div class="col-sm-1">
-                  <label class="col-sm-3 col-form-label">Role</label>
-               </div>
-               <div class="col-sm-3">
-                  <input type="text" class="form-control" name="role_name_add[]" placeholder="Role Name" required>
-               </div>
-               <div class="col-sm-5">
-                  <input type="text" class="form-control" name="role_desc_add[]" placeholder="Role Description" required>
-               </div>
-               <div class="col-sm-3">
-                  <button type="button" class="btn btn-danger remove-role-btn">&times;</button>
-               </div>
-            </div>
-         `;
-         $('#roleInputWrapper').append(newInput);
-      });
-
-      // delete Role input field
-      $(document).on('click','.remove-role-btn', function(){
-         $(this).closest('.role-input-group').remove();
-      });
-
-      // Ajax for submit new role
-      $('#btn_role_add').on('click', function(e){
+      // Submit new system
+      $('#btn_system_add').on('click', function(e){
          e.preventDefault();
-         // const roleName = $('#role_name_add').val();
-         // const roleDesc = $('#role_desc_add').val();
-         const roleNames = $('[name="role_name_add[]"]').map(function(){
-            return $(this).val();
-         }).get();
-         const roleDesc = $('[name="role_desc_add[]"]').map(function(){
-            return $(this).val();
-         }).get();
-
+         
+         let formData = new FormData($('#add_system_form')[0]);
+         
          $.ajax({
-            url : '<?= base_url('admin_area/usermanagement/add_new_role')?>',
+            url : '<?= base_url('admin_area/systemmanagement/add_new_system')?>',
             type : 'POST',
             dataType : 'json',
-            data : { role_name_add : roleNames, role_desc_add : roleDesc},
+            data : formData,
+            processData : false,
+            contentType : false,
             success : function(response) {
-               if(response.status === 'success'){
-                  $('#add_role_form')[0].reset();
-                  $('#role_add_modal').modal('hide');
-                  Swal.fire("Role added succesfully",'','success');
+               if(response.success){
+                  $('#add_system_form')[0].reset();
+                  $('#system_add_modal').modal('hide');
+                  Swal.fire("System added succesfully",'','success');
                   setTimeout(function(){
                      location.reload();
                   },1300);
                } else {
-                  Swal.fire("Adding Role Failed",'','error');
+                  Swal.fire("Adding System Failed",'','error');
                }
             }
          });
       });
-      // <END> Ajax for submit new role <END>
+      // <END> Submit new System <END>
 
       // Delete Role
       $('#list_role_table').on('click','.btn_delete', function(){

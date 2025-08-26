@@ -45,7 +45,7 @@ class MC_tubing_dashboard extends CI_Controller {
         echo json_encode([
             'plan' => $plan,
             'actual_total' => $actual_total,
-            'percentage' => round(($actual_total / $plan) * 100,1),
+            // 'percentage' => round(($actual_total / $plan) * 100,1),
         ]);
     }
 }

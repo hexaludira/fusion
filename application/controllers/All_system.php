@@ -23,7 +23,7 @@ class All_system extends CI_Controller {
         foreach ($systems as $sys) {
             $data['boxes'][$sys->system_code] = [
                 'title' => $sys->system_name,
-                'desc' => 'Dashboard & Report',
+                'desc' => $sys->system_desc,
                 'color' => $sys->color,
                 'img' => $sys->icon,
                 'url' => base_url($sys->url)

@@ -188,12 +188,28 @@
                end_date : endDate
             },
             success: function(response) {
-               $('#plan_ckm').text(response.plan_ckm);
-               $('#actual_ckm').text(response.actual_total_ckm);
-               $('#percent_ckm').text(response.percentage_ckm + '%');
-               $('#plan_fkm').text(response.plan_fkm);
-               $('#actual_fkm').text(response.actual_total_fkm);
-               $('#percent_fkm').text(response.percentage_fkm + '%');
+               let plan_ckm = response.plan_ckm;
+               let plan_fkm = response.plan_fkm;
+               let actual_ckm = response.actual_total_ckm;
+               let actual_fkm = response.actual_total_fkm;
+               let percentage_ckm = 0;
+               let percentage_fkm = 0;
+               if((plan_ckm != null) && (plan_fkm != null)){
+                  percentage_ckm = ((actual_ckm / plan_ckm) * 100).toFixed(1);
+                  percentage_fkm = ((actual_fkm / plan_fkm) * 100).toFixed(1);
+               } else {
+                  Swal.fire({
+                     title: "Warning",
+                     text: 'Plan data is empty',
+                     icon: "warning"
+                  });
+               }
+               $('#plan_ckm').text(plan_ckm);
+               $('#actual_ckm').text(actual_ckm);
+               $('#percent_ckm').text(percentage_ckm + ' %');
+               $('#plan_fkm').text(plan_fkm);
+               $('#actual_fkm').text(actual_fkm);
+               $('#percent_fkm').text(percentage_fkm + ' %');
             },
             error: function(){
                Swal.fire({

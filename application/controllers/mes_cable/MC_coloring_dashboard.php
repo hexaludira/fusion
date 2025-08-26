@@ -61,8 +61,6 @@ class MC_coloring_dashboard extends CI_Controller {
     public function get_coloring_km_summary(){
         $start = $this->input->post('start_date');
         $end = $this->input->post('end_date');
-        // echo $start;
-        // echo $end;
 
         $data = $this->coloring_model->get_coloring_plan($start,$end);
         // $data_actual = $this->plan_model->get_actual_coloring($start,$end);
@@ -76,7 +74,7 @@ class MC_coloring_dashboard extends CI_Controller {
         echo json_encode([
             'plan' => $plan,
             'actual_total' => $actual_total,
-            'percentage' => round(($actual_total / $plan) * 100,1)
+            // 'percentage' => round(($actual_total / $plan) * 100,1)
         ]);
     }
 
