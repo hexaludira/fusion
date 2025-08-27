@@ -14,28 +14,39 @@
     </div>
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
+        <!-- User Management -->
         <li class="nav-item">
           <a href="<?= base_url('admin_area/usermanagement');?>" class="nav-link <?= ($this->uri->segment(2) == 'usermanagement' && $this->uri->segment(3) == '') ? 'active' : '' ?>">
             <i class="nav-icon fa-solid fa-gauge-high"></i>
             <p>Admin Dashboard</p>
           </a>
         </li>
+        <!-- Role Management -->
         <li class="nav-item">
           <a href="<?= base_url('admin_area/usermanagement/role_management_menu');?>" class="nav-link <?= ($this->uri->segment(3) == 'role_management_menu' && $this->uri->segment(4) == '') ? 'active' : '' ?>">
             <i class="nav-icon fa-solid fa-user-gear"></i>
             <p>Role Management</p>
           </a>
         </li>
+        <!-- User Management -->
         <li class="nav-item">
           <a href="<?= base_url('admin_area/usermanagement/user_management_menu');?>" class="nav-link <?= ($this->uri->segment(3) == 'user_management_menu' && $this->uri->segment(4) == '') ? 'active' : '' ?>">
             <i class="nav-icon fa-solid fa-users"></i>
             <p>User Management</p>
           </a>
         </li>
+        <!-- System Management -->
         <li class="nav-item">
           <a href="<?= base_url('admin_area/systemmanagement');?>" class="nav-link <?= ($this->uri->segment(2) == 'systemmanagement' && $this->uri->segment(3) == '') ? 'active' : '' ?>">
-            <i class="nav-icon fa-solid fa-bars"></i>
+            <i class="nav-icon fa-solid fa-ticket"></i>
             <p>System Management</p>
+          </a>
+        </li>
+        <!-- Menu Management -->
+        <li class="nav-item">
+          <a href="<?= base_url('admin_area/menumanagement');?>" class="nav-link <?= ($this->uri->segment(2) == 'menumanagement' && $this->uri->segment(3) == '') ? 'active' : '' ?>">
+            <i class="nav-icon fa-solid fa-list"></i>
+            <p>Menu Management</p>
           </a>
         </li>
         <li class="nav-header ">

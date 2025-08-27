@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="<?= base_url('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')?>">
   <link rel="stylesheet" href="<?= base_url('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')?>">
   <link rel="stylesheet" href="<?= base_url('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')?>">
+  <link rel="stylesheet" href="<?= base_url('assets/plugins/datatables-rowgroup/css/rowGroup.bootstrap4.min.css')?>">
 
   <link rel="stylesheet" href="<?= base_url('assets/dist/css/apexcharts.css') ?>">
   <link rel="stylesheet" href="<?= base_url('assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')?>">
@@ -63,10 +64,11 @@
   <script src="<?= base_url('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.js')?>"></script>
   <script src="<?= base_url('assets/plugins/datatables-responsive/js/dataTables.responsive.js')?>"></script>
   <script src="<?= base_url('assets/plugins/datatables-responsive/js/dataTables.responsive.min.js')?>"></script>
-  <script src="<?= base_url('assets/plugins/datatables-responsive/js/responsive.bootstrap4.js')?>"></script>
   <script src="<?= base_url('assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')?>"></script>
   <script src="<?= base_url('assets/plugins/datatables-buttons/js/dataTables.buttons.min.js')?>"></script>
   <script src="<?= base_url('assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')?>"></script>
+  <script src="<?= base_url('assets/plugins/datatables-rowgroup/js/dataTables.rowGroup.min.js')?>"></script>
+  <script src="<?= base_url('assets/plugins/datatables-rowgroup/js/rowGroup.bootstrap4.min.js')?>"></script>
   <script src="<?= base_url('assets/plugins/jszip/jszip.min.js')?>"></script>
   <script src="<?= base_url('assets/plugins/pdfmake/pdfmake.min.js')?>"></script>
   <script src="<?= base_url('assets/plugins/pdfmake/vfs_fonts.js')?>"></script>
