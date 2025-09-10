@@ -12,6 +12,11 @@ class User_management_model extends CI_Model{
         return $total_role;
     }
 
+    public function get_total_system(){
+        $total_system = $this->db->count_all_results('user_systems');
+        return $total_system;
+    }
+
     public function get_all_role(){
         $all_role = $this->db->get('role_tbl')->result();
         return $all_role;

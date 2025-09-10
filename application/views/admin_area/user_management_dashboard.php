@@ -26,6 +26,19 @@
          </a>
       </div>
     </div>
+    <!-- Total System -->
+    <div class="col-lg-3 col-6">
+      <div class="small-box bg-danger">
+        <div class="inner">
+          <h3 class="fs-6 fw-bold text-wrap">Total System: <?= $total_system?></h3><br/>
+        </div>
+        <div class="icon"><i class="nav-icon fa-solid fa-ticket"></i>
+        </div>
+         <a href="<?= base_url('admin_area/systemmanagement') ?>" class="small-box-footer">
+            Detail <i class="fas fa-eye"></i>
+         </a>
+      </div>
+    </div>
     
   </div>
 </div>
