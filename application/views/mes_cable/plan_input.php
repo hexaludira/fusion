@@ -196,7 +196,7 @@
                      </div>
                      <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary float-right" id="btn_plan_update">Set Plan</button>
+                        <button type="submit" class="btn btn-primary float-right" id="btn_plan_update">Update Plan</button>
                      </div>
                 </form>
             </div>

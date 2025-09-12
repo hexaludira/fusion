@@ -32,7 +32,7 @@
             PROFILE
         </li>
         <li class="nav-item">
-          <a href="<?= base_url('all_system/change_password') ?>" class="nav-link">
+          <a href="<?= base_url('all_system/change_password') ?>" class="nav-link <?= ($this->uri->segment(2) == 'change_password' && $this->uri->segment(3) == '') ? 'active' : '' ?>">
             <i class="nav-icon fas fa-key"></i>
             <p>Change Password</p>
           </a>
@@ -44,7 +44,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="<?= base_url('all_system/show_about'); ?>" class="nav-link">
+          <a href="<?= base_url('all_system/show_about'); ?>" class="nav-link <?= ($this->uri->segment(2) == 'show_about' && $this->uri->segment(3) == '') ? 'active' : '' ?>">
             <i class="nav-icon fas fa-circle-info"></i>
             <p>About</p>
           </a>

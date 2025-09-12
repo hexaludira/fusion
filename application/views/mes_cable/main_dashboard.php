@@ -181,6 +181,12 @@
 				type: 'POST',
 				dataType: 'json',
 				success: function(response){
+					let plan_ckm = response.plan_ckm;
+					let plan_fkm = response.plan_fkm;
+					let actual_ckm = response.actual_ckm;
+					let actual_fkm = response.actual_fkm;
+					let percentage_ckm = response.percentage_ckm;
+					let percentage_fkm = response.percentage_fkm;
 					// remove the loading spinner
 					container.find('.loading-spinner').hide();
 					container.find('.dashboard-content').show();
@@ -191,6 +197,9 @@
 							text: response.message,
 							icon: "warning"
 						});
+						container.find('.actual_ckm').text(actual_ckm);
+						container.find('.actual_fkm').text(actual_fkm);
+						renderChartFor(tab, response.plan_ckm, response.actual_ckm, response.plan_fkm, response.actual_fkm);
 						return;
 					}
 

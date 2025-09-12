@@ -159,7 +159,7 @@ class Coloring_dashboard_model extends CI_Model {
                 WHERE rn = 1
                 GROUP BY cable_type, color
             )
-            SELECT SUM(total_qty) / 1000 AS grand_total
+            SELECT ROUND((SUM(total_qty) / 1000), 2) AS grand_total
             FROM Grouped
         ")->row();
 
