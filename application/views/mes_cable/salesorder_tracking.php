@@ -89,6 +89,7 @@
          dom : 'Bfrtip',
          processing: true,
          serverSide: false,
+         deferRender: true,
          "paging": true,
          "lengthChange": false,
          "searching": true,
@@ -113,13 +114,6 @@
             },
             "dataSrc" : "data"
          },
-         // "columnDefs" : [
-         //    {
-         //       "targets": [1],
-         //       "visible": false,
-         //       "searchable": false
-         //    }
-         // ],
          "columns": [
             // {"data" : "No"},
             {"data" : "created_date"},

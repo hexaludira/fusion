@@ -30,32 +30,17 @@ class MC_coloring_dashboard extends CI_Controller {
     public function load_coloring_table(){
         $start = $this->input->post('start_date');
         $end = $this->input->post('end_date');
-        // $no = $this->input->post('start');
 
-        $data = $this->coloring_model->get_coloring_details($start,$end);
-
-        header('Content-Type: application/json');
-        // foreach($data as $item){
-        //     // $no++;
-        //     $row = [];
-        //     // $row[] = $no;
-        //     $row[] = $item->color;
-        //     $row[] = $item->G652D;
-        //     $row[] = $item->G655;
-        //     $row[] = $item->G657A1;
-        //     $row[] = $item->G657A1_200;
-        //     $row[] = $item->G657A2;
-        //     $data[] = $row;
-        // }
-
-        // $output = [
-        //     // "draw" => intval($this->input->post('draw')),
-        //     // "recordsTotal" => $this->coloring_model->count_all(),
-        //     // "recordsFiltered" => $this->coloring_model->count_filtered(),
-        //     "data" => $data,
-        // ];
-        
-        echo json_encode(["data" => $data],JSON_PRETTY_PRINT);
+        if (empty($start) || empty($end)) {
+            header('Content-Type: application/json');
+            echo json_encode(["data" => []], JSON_PRETTY_PRINT);
+            return;
+        } else {
+            // load model
+            $data = $this->coloring_model->get_coloring_details($start,$end);
+            header('Content-Type: application/json');
+            echo json_encode(["data" => $data],JSON_PRETTY_PRINT);
+        }
     }
 
     public function get_coloring_km_summary(){

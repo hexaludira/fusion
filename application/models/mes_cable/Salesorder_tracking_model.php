@@ -47,9 +47,11 @@ class Salesorder_tracking_model extends CI_Model{
 					A.biz_type = 1 
 					AND A.state = 1
 					AND A.is_deleted = 0
-					AND F.sales_order_no = 'SO2507170002'
-					AND DATE(A.last_updated_date_time) >= '$start'
-					AND DATE(A.last_updated_date_time) <= '$end'
+					-- AND F.sales_order_no = 'SO2507170002'
+					-- AND DATE(A.last_updated_date_time) >= '$start'
+					-- AND DATE(A.last_updated_date_time) <= '$end'
+					AND DATE(G.order_created_date_time) >= '$start'
+					AND DATE(G.order_created_date_time) <= '$end'
 			GROUP BY A.inspection_no
             ), 
             Pivoted AS (

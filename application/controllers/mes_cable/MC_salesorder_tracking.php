@@ -24,9 +24,15 @@ class MC_salesorder_tracking extends CI_Controller{
         $start = $this->input->post('start_date');
         $end = $this->input->post('end_date');
 
-        // load model
-        $data = $this->so_tracking_model->get_salesorder_tracking($start,$end);
-        header('Content-Type: application/json');
-        echo json_encode(["data" => $data], JSON_PRETTY_PRINT);
+        if (empty($start) || empty($end)) {
+            header('Content-Type: application/json');
+            echo json_encode(["data" => []], JSON_PRETTY_PRINT);
+            return;
+        } else {
+            // load model
+            $data = $this->so_tracking_model->get_salesorder_tracking($start,$end);
+            header('Content-Type: application/json');
+            echo json_encode(["data" => $data], JSON_PRETTY_PRINT);
+        }
     }
 }
