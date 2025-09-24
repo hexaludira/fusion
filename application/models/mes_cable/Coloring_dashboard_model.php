@@ -14,8 +14,8 @@ class Coloring_dashboard_model extends CI_Model {
         $plan_data = $this->db->query("SELECT 
                                         SUM(coloring_plan_qty) as coloring_plan
                                         FROM mc_daily_plan_tbl 
-                                        WHERE date_plan >= '$start' 
-                                        AND date_plan <= '$end'
+                                        WHERE date_plan_start > '$start' 
+                                        AND date_plan_end < '$end'
                                         AND is_delete = 0
         ")->row();
 
@@ -48,8 +48,8 @@ class Coloring_dashboard_model extends CI_Model {
                                                     AND A.state = 1 
                                                     AND A.result = 1
                                                     AND A.is_deleted = 0
-                                                    AND DATE(A.last_updated_date_time) >= '$start'
-                                                    AND DATE(A.last_updated_date_time) <= '$end'
+                                                    AND A.created_date_time >= '$start'
+                                                    AND A.created_date_time <= '$end'
                                                 GROUP BY A.inspection_no
                                             )
                                             SELECT 
@@ -95,8 +95,8 @@ class Coloring_dashboard_model extends CI_Model {
                                                     AND A.state = 1
                                                     AND A.result = 1
                                                     AND A.is_deleted = 0
-                                                    AND DATE(A.last_updated_date_time) >= '$start'
-                                                    AND DATE(A.last_updated_date_time) <= '$end'
+                                                    AND A.created_date_time >= '$start'
+                                                    AND A.created_date_time <= '$end'
                                                 GROUP BY
                                                     A.inspection_no
                                                 ORDER BY
@@ -143,8 +143,8 @@ class Coloring_dashboard_model extends CI_Model {
                 AND A.state = 1
                 AND A.result = 1
                 AND A.is_deleted = 0
-                AND DATE(A.last_updated_date_time) >= '$start'
-                AND DATE(A.last_updated_date_time) <= '$end'
+                AND A.created_date_time >= '$start'
+                AND A.created_date_time <= '$end'
             GROUP BY
                 A.inspection_no
             ORDER BY

@@ -39,7 +39,8 @@ class MC_plan_input extends CI_Controller {
         $datetime_now = date('Y-m-d H:i:s');
 
         $dataSave = $this->plan_model->insertPlanData([
-            'date_plan' => $data['plan_date_add'],
+            'date_plan_start' => $data['plan_date_add_start'],
+            'date_plan_end' => $data['plan_date_add_end'],
             'sales_order_no' => $data['plan_so_number_add'],
             'coloring_plan_qty'=> $data['plan_coloring_add'],
             'tubing_plan_qty'=> $data['plan_tubing_add'],
@@ -70,7 +71,8 @@ class MC_plan_input extends CI_Controller {
         $datetime_now = date('Y-m-d H:i:s');
 
         $dataAll = [
-            'date_plan' => $data['plan_date_edit'],
+            'date_plan_start' => $data['plan_date_edit_start'],
+            'date_plan_end' => $data['plan_date_edit_end'],
             'sales_order_no' => $data['plan_so_number_edit'],
             'coloring_plan_qty'=> $data['plan_coloring_edit'],
             'tubing_plan_qty'=> $data['plan_tubing_edit'],

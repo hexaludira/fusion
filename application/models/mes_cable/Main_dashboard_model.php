@@ -14,7 +14,10 @@ class Main_dashboard_model extends CI_Model{
                                             SUM(sheathing_plan_ckm_qty) AS sheathing_plan_ckm,
                                             SUM(sheathing_plan_fkm_qty) AS sheathing_plan_fkm
                                             FROM mc_daily_plan_tbl
-                                            WHERE date_plan = CURRENT_DATE()
+                                            WHERE date_plan_start BETWEEN DATE_ADD(CURDATE(), INTERVAL 8 HOUR)
+                                                                    AND DATE_ADD(DATE_ADD(CURDATE(), INTERVAL 1 DAY), INTERVAL 8 HOUR)
+                                            AND date_plan_end   BETWEEN DATE_ADD(CURDATE(), INTERVAL 8 HOUR)
+                                                                    AND DATE_ADD(DATE_ADD(CURDATE(), INTERVAL 1 DAY), INTERVAL 8 HOUR)
                                             AND is_delete = 0
         
         ")->row();
@@ -26,8 +29,8 @@ class Main_dashboard_model extends CI_Model{
                                         SUM(sheathing_plan_ckm_qty) AS sheathing_plan_ckm,
                                         SUM(sheathing_plan_fkm_qty) AS sheathing_plan_fkm
                                         FROM mc_daily_plan_tbl
-                                        WHERE MONTH(date_plan) = MONTH(CURRENT_DATE())
-                                        AND YEAR(date_plan) = YEAR(CURRENT_DATE())
+                                        WHERE date_plan_start >= DATE_ADD(DATE_FORMAT(CURDATE(), '%Y-%m-01'), INTERVAL 8 HOUR)
+                                        AND date_plan_end <= DATE_ADD(DATE_ADD(LAST_DAY(CURDATE()), INTERVAL 1 DAY), INTERVAL 8 HOUR)
                                         AND is_delete = 0
         
         ")->row();
@@ -39,7 +42,8 @@ class Main_dashboard_model extends CI_Model{
                                         SUM(sheathing_plan_ckm_qty) AS sheathing_plan_ckm,
                                         SUM(sheathing_plan_fkm_qty) AS sheathing_plan_fkm
                                         FROM mc_daily_plan_tbl
-                                        WHERE YEAR(date_plan) = YEAR(CURRENT_DATE())
+                                        WHERE date_plan_start >= DATE_ADD(MAKEDATE(YEAR(CURDATE()), 1), INTERVAL 8 HOUR)
+                                        AND date_plan_end <=  DATE_ADD(MAKEDATE(YEAR(CURDATE())+1, 1), INTERVAL 8 HOUR)
                                         AND is_delete = 0
         
         ")->row();
@@ -64,13 +68,13 @@ class Main_dashboard_model extends CI_Model{
                                 E.shop_lot AS lot_number,
                                 F.sales_order_no AS sales_order_no,
                                 ROW_NUMBER() OVER (PARTITION BY A.lot ORDER BY A.test_no DESC) AS rn,
-                                
                                 B.sample_data
                         FROM qc_inspection AS A
                         LEFT JOIN qc_inspection_item_detail AS B 
                                 ON A.inspection_no = B.inspection_no 
                                 AND B.is_deleted = 0
-                                AND B.item_no = '23081500007'
+                                AND B.item_no = '23081500007' -- Fiber Length
+                            -- AND B.item_no = '23081600122' -- Marking Length
                         LEFT JOIN basic_material AS C
                                 ON A.matnr = C.matnr
                         LEFT JOIN shop_lot AS E
@@ -86,7 +90,8 @@ class Main_dashboard_model extends CI_Model{
                                 AND A.biz_type = 1 
                                 AND A.state = 1
                                 AND A.is_deleted = 0
-                                AND DATE(A.last_updated_date_time) >= CURRENT_DATE()
+                                AND A.created_date_time >= DATE_ADD(CURDATE(), INTERVAL 8 HOUR)
+                                AND A.created_date_time <= DATE_ADD(DATE_ADD(CURDATE(), INTERVAL 1 DAY), INTERVAL 8 HOUR)
                         GROUP BY A.inspection_no
             )
                 SELECT 
@@ -161,8 +166,8 @@ class Main_dashboard_model extends CI_Model{
                                 AND A.biz_type = 1 
                                 AND A.state = 1
                                 AND A.is_deleted = 0
-                                AND MONTH(A.last_updated_date_time) = MONTH(CURRENT_DATE())
-                                AND YEAR(A.last_updated_date_time) = YEAR(CURRENT_DATE())
+                                AND A.created_date_time >= DATE_ADD(DATE_FORMAT(CURDATE(), '%Y-%m-01'), INTERVAL 8 HOUR)
+                                AND A.created_date_time <=  DATE_ADD(DATE_ADD(LAST_DAY(CURDATE()), INTERVAL 1 DAY), INTERVAL 8 HOUR)
                         GROUP BY A.inspection_no
             )
                 SELECT 
@@ -237,7 +242,9 @@ class Main_dashboard_model extends CI_Model{
                                 AND A.biz_type = 1 
                                 AND A.state = 1
                                 AND A.is_deleted = 0
-                                AND YEAR(A.last_updated_date_time) = YEAR(CURRENT_DATE())
+                                -- AND YEAR(A.last_updated_date_time) = YEAR(CURRENT_DATE())
+                                AND A.created_date_time >= DATE_ADD(MAKEDATE(YEAR(CURDATE()), 1), INTERVAL 8 HOUR)
+                                AND A.created_date_time <=  DATE_ADD(MAKEDATE(YEAR(CURDATE())+1, 1), INTERVAL 8 HOUR)
                         GROUP BY A.inspection_no
             )
                 SELECT 

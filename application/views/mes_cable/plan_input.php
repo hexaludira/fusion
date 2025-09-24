@@ -22,7 +22,8 @@
                         <thead>
                            <tr>
                               <th rowspan="2">No</th>
-                              <th rowspan="2">Date</th>
+                              <th rowspan="2">Date Plan Start</th>
+                              <th rowspan="2">Date Plan End</th>
                               <th rowspan="2">Sales Order No</th>
                               <th rowspan="2">Coloring Plan</th>
                               <th rowspan="2">Tubing Plan</th>
@@ -69,10 +70,21 @@
                            </div>
                         <div class="form-group row">
                            <label for="plan_date_add" class="col-sm-3 col-form-label">Date</label>
-                           <div class="col-sm-6">
+                           <div class="col-sm-4">
                               <div class="input-group date" data-target-input="nearest">
-                                 <input type="text" class="form-control datetimepicker-input" data-target="#plan_date_add" id="plan_date_add" name="plan_date_add">
-                                 <div class="input-group-append" data-target="#plan_date_add" data-toggle="datetimepicker">
+                                 <input type="text" class="form-control datetimepicker-input" data-target="#plan_date_add_start" id="plan_date_add_start" name="plan_date_add_start">
+                                 <div class="input-group-append" data-target="#plan_date_add_start" data-toggle="datetimepicker">
+                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-sm-auto d-flex justify-content-center">
+                              <span class="h2 m-0">-</span>
+                           </div>
+                           <div class="col-sm-4">
+                              <div class="input-group date" data-target-input="nearest">
+                                 <input type="text" class="form-control datetimepicker-input" data-target="#plan_date_add_end" id="plan_date_add_end" name="plan_date_add_end">
+                                 <div class="input-group-append" data-target="#plan_date_add_end" data-toggle="datetimepicker">
                                  <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                  </div>
                               </div>
@@ -147,10 +159,21 @@
                         </div>
                         <div class="form-group row">
                            <label for="plan_date_edit" class="col-sm-3 col-form-label">Date</label>
-                           <div class="col-sm-6">
+                           <div class="col-sm-4">
                               <div class="input-group date" data-target-input="nearest">
-                                 <input type="text" class="form-control datetimepicker-input" data-target="#plan_date_edit" id="plan_date_edit" name="plan_date_edit">
-                                 <div class="input-group-append" data-target="#plan_date_edit" data-toggle="datetimepicker">
+                                 <input type="text" class="form-control datetimepicker-input" data-target="#plan_date_edit_start" id="plan_date_edit_start" name="plan_date_edit_start">
+                                 <div class="input-group-append" data-target="#plan_date_edit_start" data-toggle="datetimepicker">
+                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-sm-auto d-flex justify-content-center">
+                              <span class="h2 m-0">-</span>
+                           </div>
+                           <div class="col-sm-4">
+                              <div class="input-group date" data-target-input="nearest">
+                                 <input type="text" class="form-control datetimepicker-input" data-target="#plan_date_edit_end" id="plan_date_edit_end" name="plan_date_edit_end">
+                                 <div class="input-group-append" data-target="#plan_date_edit_end" data-toggle="datetimepicker">
                                  <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                  </div>
                               </div>
@@ -232,8 +255,9 @@
          /* ======================= Show Daily Plan Data ========================= */
          show_plan_data();
 
-         $('#plan_date_add, #plan_date_edit').datetimepicker({
-            format : 'YYYY-MM-DD'
+         $('#plan_date_add_start, #plan_date_add_end, #plan_date_edit_start, #plan_date_edit_end').datetimepicker({
+            format : 'YYYY-MM-DD HH:mm',
+            icons : {time: 'far fa-clock'}
          });
 
          function show_plan_data(){
@@ -268,11 +292,22 @@
                         {data: null, render: function(data, type, row, meta){
                            return meta.row + 1;
                         }},
-                        {data: 'date_plan',
+                        {data: 'date_plan_start',
                            render: function(data, type, row){
                               if(data) {
-                                 const dateParts = data.split("-");
-                                 return dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0];
+                                 const [datePart, timePart] = data.split(" ");
+                                 const dateParts = datePart.split("-");
+                                 return dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0] + " " + timePart;
+                              }
+                              return '';
+                           }
+                        },
+                        {data: 'date_plan_end',
+                           render: function(data, type, row){
+                              if(data) {
+                                 const [datePart, timePart] = data.split(" ");
+                                 const dateParts = datePart.split("-");
+                                 return dateParts[2] + "-" + dateParts[1] + "-" + dateParts[0] + " " + timePart;
                               }
                               return '';
                            }
@@ -346,7 +381,8 @@
                      console.log(response);
                      $('#plan_edit_modal').modal('show');
                      $('#plan_id_edit').val(response[0].plan_id);
-                     $('#plan_date_edit').val(response[0].date_plan);
+                     $('#plan_date_edit_start').val(response[0].date_plan_start);
+                     $('#plan_date_edit_end').val(response[0].date_plan_end);
                      $('#plan_so_number_edit').val(response[0].sales_order_no);
                      $('#plan_coloring_edit').val(response[0].coloring_plan_qty);
                      $('#plan_tubing_edit').val(response[0].tubing_plan_qty);
@@ -356,7 +392,7 @@
                   }
                });
             })
-          /* =======================<END> Show Edit Daily Plan Modal <END>====================== */
+          /* ==================<END> Show Edit Daily Plan Modal <END>================== */
          
           /* ======================= Update Daily Plan Data ========================= */
             $("#btn_plan_update").on('click',(function(e){

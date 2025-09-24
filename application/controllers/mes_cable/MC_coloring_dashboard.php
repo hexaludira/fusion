@@ -8,7 +8,7 @@ class MC_coloring_dashboard extends CI_Controller {
         check_login();
         $this->load->model('Menu_model');
         // sleep(1);
-        usleep(500 * 1000);
+        // usleep(500 * 1000);
         $this->load->model('mes_cable/Coloring_dashboard_model', 'coloring_model');
     }
 

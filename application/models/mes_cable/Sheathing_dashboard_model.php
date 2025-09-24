@@ -57,8 +57,8 @@ class Sheathing_dashboard_model extends CI_Model{
 					AND A.biz_type = 1 
 					AND A.state = 1
 					AND A.is_deleted = 0
-					AND DATE(A.last_updated_date_time) >= '$start'
-					AND DATE(A.last_updated_date_time) <= '$end'
+					AND A.created_date_time >= '$start'
+                    AND A.created_date_time <= '$end'
 			GROUP BY A.inspection_no
         )
             SELECT 
@@ -132,8 +132,8 @@ class Sheathing_dashboard_model extends CI_Model{
                                 AND A.biz_type = 1 
                                 AND A.state = 1
                                 AND A.is_deleted = 0
-                                AND DATE(A.last_updated_date_time) >= '$start'
-                                AND DATE(A.last_updated_date_time) <= '$end'
+                                AND A.created_date_time >= '$start'
+                                AND A.created_date_time <= '$end'
                         GROUP BY A.inspection_no
             )
                 SELECT 

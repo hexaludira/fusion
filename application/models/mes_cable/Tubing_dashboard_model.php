@@ -46,8 +46,10 @@ class Tubing_dashboard_model extends CI_Model{
 					AND A.state = 1 
 					AND A.result = 1
 					AND A.is_deleted = 0
-					AND DATE(A.last_updated_date_time) >= '$start'
-					AND DATE(A.last_updated_date_time) <= '$end'
+					-- AND DATE(A.last_updated_date_time) >= '$start'
+					-- AND DATE(A.last_updated_date_time) <= '$end'
+                    AND A.created_date_time >= '$start'
+                    AND A.created_date_time <= '$end'
 			GROUP BY A.inspection_no
             )
                 SELECT 
@@ -94,8 +96,8 @@ class Tubing_dashboard_model extends CI_Model{
                 AND A.state = 1
                 AND A.result = 1
                 AND A.is_deleted = 0
-                AND DATE(A.last_updated_date_time) >= '$start'
-                AND DATE(A.last_updated_date_time) <= '$end'
+                AND A.created_date_time >= '$start'
+                AND A.created_date_time <= '$end'
             GROUP BY
                 A.inspection_no
             ORDER BY

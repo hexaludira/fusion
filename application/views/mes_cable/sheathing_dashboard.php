@@ -15,7 +15,7 @@
                <form class="form-horizontal" method="post" action="" id="date_range_form">
                   <div class="form-group row">
                      <label class="col-md-auto col-form-label">Date Range</label>
-                     <div class="col-md-2">
+                     <div class="col-md-3">
                         <div class="input-group date" data-target-input="nearest">
                            <input type="text" class="form-control datetimepicker-input" data-target="#sheathing_date_start" id="sheathing_date_start" name="sheathing_date_start">
                            <div class="input-group-append" data-target="#sheathing_date_start" data-toggle="datetimepicker">
@@ -26,7 +26,7 @@
                      <div class="col-sm-auto d-flex justify-content-center">
                         <span class="h2 m-0">-</span>
                      </div>
-                     <div class="col-md-2">
+                     <div class="col-md-3">
                         <div class="input-group date" data-target-input="nearest">
                            <input type="text" class="form-control datetimepicker-input" data-target="#sheathing_date_end" id="sheathing_date_end" name="sheathing_date_end">
                            <div class="input-group-append" data-target="#sheathing_date_end" data-toggle="datetimepicker">
@@ -108,7 +108,8 @@
     $(document).ready(function(){
       //datepicker init
       $('#sheathing_date_start, #sheathing_date_end').datetimepicker({
-    	format : 'YYYY-MM-DD'
+         format : 'YYYY-MM-DD HH:mm',
+         icons : {time: 'far fa-clock'}
       });
 
       // Sheathing detail datatables
@@ -195,19 +196,23 @@
                let percentage_ckm = 0;
                let percentage_fkm = 0;
                if((plan_ckm != null) && (plan_fkm != null)){
+                  $('#plan_ckm').text(plan_ckm);
+                  $('#plan_fkm').text(plan_fkm);
                   percentage_ckm = ((actual_ckm / plan_ckm) * 100).toFixed(1);
                   percentage_fkm = ((actual_fkm / plan_fkm) * 100).toFixed(1);
                } else {
+                  $('#plan_ckm').text("-");
+                  $('#plan_fkm').text("-");
                   Swal.fire({
                      title: "Warning",
                      text: 'Plan data is empty',
                      icon: "warning"
                   });
                }
-               $('#plan_ckm').text(plan_ckm);
+               // $('#plan_ckm').text(plan_ckm);
                $('#actual_ckm').text(actual_ckm);
                $('#percent_ckm').text(percentage_ckm + ' %');
-               $('#plan_fkm').text(plan_fkm);
+               // $('#plan_fkm').text(plan_fkm);
                $('#actual_fkm').text(actual_fkm);
                $('#percent_fkm').text(percentage_fkm + ' %');
             },

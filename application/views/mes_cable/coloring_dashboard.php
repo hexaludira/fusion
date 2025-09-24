@@ -15,7 +15,7 @@
                <form class="form-horizontal" method="post" action="" id="date_range_form">
                   <div class="form-group row">
                      <label class="col-md-auto col-form-label">Date Range</label>
-                     <div class="col-md-2">
+                     <div class="col-md-auto">
                         <div class="input-group date" data-target-input="nearest">
                            <input type="text" class="form-control datetimepicker-input" data-target="#coloring_date_start" id="coloring_date_start" name="coloring_date_start">
                            <div class="input-group-append" data-target="#coloring_date_start" data-toggle="datetimepicker">
@@ -26,7 +26,7 @@
                      <div class="col-sm-auto d-flex justify-content-center">
                         <span class="h2 m-0">-</span>
                      </div>
-                     <div class="col-md-2">
+                     <div class="col-md-auto">
                         <div class="input-group date" data-target-input="nearest">
                            <input type="text" class="form-control datetimepicker-input" data-target="#coloring_date_end" id="coloring_date_end" name="coloring_date_end">
                            <div class="input-group-append" data-target="#coloring_date_end" data-toggle="datetimepicker">
@@ -93,7 +93,9 @@
     $(document).ready(function(){
       //datepicker init
       $('#coloring_date_start, #coloring_date_end').datetimepicker({
-    	format : 'YYYY-MM-DD'
+    	   format : 'YYYY-MM-DD HH:mm',
+         icons: {time: 'far fa-clock'}
+         
       });
 
       //Datatables
@@ -171,15 +173,18 @@
                let actual = response.actual_total;
                let percentage = 0;
                if(plan != null){
+                  $('#plan_ckm').text(plan);
                   percentage = ((actual / plan) * 100).toFixed(1);
                } else {
+                  $('#plan_ckm').text("-");
                   Swal.fire({
                      title: "Warning",
                      text: 'Plan data is empty',
                      icon: "warning",
                   });
+                  
                }
-               $('#plan_ckm').text(plan);
+               // $('#plan_ckm').text(plan);
                $('#actual_ckm').text(actual);
                $('#percent_ckm').text(percentage + ' %');
             },
