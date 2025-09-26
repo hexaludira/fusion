@@ -14,8 +14,8 @@ class Sheathing_dashboard_model extends CI_Model{
                                             SUM(sheathing_plan_ckm_qty) AS sheathing_plan_ckm,
                                             SUM(sheathing_plan_fkm_qty) AS sheathing_plan_fkm
                                             FROM mc_daily_plan_tbl
-                                            WHERE date_plan >= '$start'
-                                            AND date_plan <= '$end'
+                                            WHERE date_plan_start >= '$start'
+                                            AND date_plan_end <= '$end'
                                             AND is_delete = 0
         ")->row();
 

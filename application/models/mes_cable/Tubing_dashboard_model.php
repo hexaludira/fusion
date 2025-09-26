@@ -13,8 +13,8 @@ class Tubing_dashboard_model extends CI_Model{
         $plan_data = $this->db->query("SELECT  
                                             SUM(tubing_plan_qty) as tubing_plan  
                                             FROM mc_daily_plan_tbl 
-                                            WHERE date_plan >= '$start' 
-                                            AND date_plan <= '$end'
+                                            WHERE date_plan_start >= '$start' 
+                                            AND date_plan_end <= '$end'
                                             AND is_delete = 0
         ")->row();
 
