@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row">
     <?php foreach ($boxes as $box):?>
-      <div class="col-lg-3 col-6">
+      <div class="col-md-3">
         <div class="small-box <?= $box['color']?>">
           <div class="inner">
             <h3><?= $box['title'] ?></h3>
